@@ -19,14 +19,14 @@ class AMP_AdManager {
 	 *
 	 * @var string
 	 */
-	public static $dfp_network_id;
+	public static $amp_settings;
 
 	/**
 	 * Class Constructor.
 	 */
 	public function __construct() {
 
-		self::$dfp_network_id = get_option( 'dfp-network-id' );
+		self::$amp_settings = get_option( 'amp-admanager-menu-settings' );
 
 		/**
 		 * Actions.
@@ -123,7 +123,7 @@ class AMP_AdManager {
 				$attr['width'],
 				$attr['height'],
 				self::get_slot_media_query( $breakpoint ),
-				'/' . self::$dfp_network_id . '/' . $attr['ad-unit'],
+				'/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'],
 				wp_json_encode( self::get_dfp_ad_targeting_data() ),
 				$breakpoint['sizes']
 			);
@@ -169,7 +169,7 @@ class AMP_AdManager {
 	 */
 	public function load_scripts() {
 
-		$should_load_resources = get_option( 'load-amp-resources' );
+		$should_load_resources = self::$amp_settings['load-amp-resources'];
 
 		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
 			load_template( AMP_ADMANAGER_ROOT . '/template-parts/tags-head.php' );

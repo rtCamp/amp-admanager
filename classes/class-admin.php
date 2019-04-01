@@ -15,10 +15,24 @@ namespace AMP_AdManager;
 class Admin {
 
 	/**
+	 * AMP settings array.
+	 *
+	 * @var array
+	 */
+	private $amp_settings;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
+
+		$this->amp_settings = get_option( 'amp-admanager-menu-settings' );
+
+		/**
+		 * Actions.
+		 */
 		add_action( 'admin_menu', [ $this, 'amp_admanager_menu' ] );
+		add_action( 'admin_init', [ $this, 'amp_admanager_menu_init' ] );
 	}
 
 	/**
@@ -27,7 +41,13 @@ class Admin {
 	 * @return void
 	 */
 	public function amp_admanager_menu() {
-		add_menu_page( 'AMP AdManager Settings', 'AMP AdManager', 'manage_options', 'amp-admanager-menu', [ $this, 'amp_admanager_menu_html' ] );
+		add_menu_page(
+			'AMP AdManager Settings',
+			'AMP AdManager',
+			'manage_options',
+			'amp-admanager-menu',
+			[ $this, 'amp_admanager_menu_html' ]
+		);
 	}
 
 	/**
@@ -42,18 +62,60 @@ class Admin {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'amp-admanager' ) );
 		}
 
-		if ( isset( $_POST['dfp-network-id'] ) ) { // phpcs:ignore
-			update_option( 'dfp-network-id', sanitize_text_field( wp_unslash( $_POST['dfp-network-id'] ) ) ); // phpcs:ignore
-		} else {
-			delete_option( 'dfp-network-id' );
-		}
-
-		if ( isset( $_POST['load-amp-resources'] ) ) { // phpcs:ignore
-			update_option( 'load-amp-resources', sanitize_text_field( wp_unslash( $_POST['load-amp-resources']  ) ) ); // phpcs:ignore
-		} else {
-			delete_option( 'load-amp-resources' );
-		}
-
 		load_template( AMP_ADMANAGER_ROOT . '/template-parts/admin-settings.php' );
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	public function amp_admanager_menu_init() {
+
+		register_setting(
+			'amp-admanager-menu',
+			'amp-admanager-menu-settings'
+		);
+
+		add_settings_section(
+			'amp-admanager-general-settings',
+			'Global Settings',
+			__return_empty_string(),
+			'amp-admanager-menu-page'
+		);
+
+		add_settings_field(
+			'dfp-network-id',
+			'DFP Network ID',
+			[ $this, 'get_text_field' ],
+			'amp-admanager-menu-page',
+			'amp-admanager-general-settings'
+		);
+
+		add_settings_field(
+			'load-amp-resources',
+			'Load AMP Resources For Non AMP Site',
+			[ $this, 'get_checkbox_field' ],
+			'amp-admanager-menu-page',
+			'amp-admanager-general-settings'
+		);
+	}
+
+	/**
+	 * Prints checkbox field.
+	 *
+	 * @return void
+	 */
+	public function get_checkbox_field() {
+		echo sprintf( '<input name="amp-admanager-menu-settings[load-amp-resources]" type="checkbox" id="load-amp-resources" value="1" %s>', checked( $this->amp_settings['load-amp-resources'], '1', false ) );
+	}
+
+	/**
+	 * Prints text field.
+	 *
+	 * @return void
+	 */
+	public function get_text_field() {
+		echo sprintf( '<input name="amp-admanager-menu-settings[dfp-network-id]" type="text" id="dfp-network-id" value="%s" class="regular-text">', esc_attr( $this->amp_settings['dfp-network-id'] ) );
 	}
 }
