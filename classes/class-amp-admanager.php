@@ -31,7 +31,8 @@ class AMP_AdManager {
 		/**
 		 * Actions.
 		 */
-		add_action( 'wp_head', [ $this, 'load_scripts' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'load_scripts' ] );
+		add_action( 'wp_default_scripts', [ $this, 'add_amp_default_scripts' ] );
 	}
 
 	/**
@@ -163,6 +164,42 @@ class AMP_AdManager {
 	}
 
 	/**
+	 * Registers amp default resources.
+	 *
+	 * @param WP_Scripts $wp_scripts global WP_Scrips object.
+	 *
+	 * @return void
+	 */
+	public function add_amp_default_scripts( $wp_scripts ) {
+
+		// AMP Runtime script registration for wp_enqueue_script.
+		$handle = 'amp-runtime';
+		$wp_scripts->add(
+			$handle,
+			'https://cdn.ampproject.org/v0.js',
+			array(),
+			null
+		);
+		$wp_scripts->add_data( $handle, 'amp_script_attributes', array(
+			'async' => true,
+		) );
+
+		// AMP Ad script registration for wp_enqueue_script.
+		$handle = 'amp-ad';
+		$wp_scripts->add(
+			$handle,
+			'https://cdn.ampproject.org/v0/amp-ad-0.1.js',
+			array(),
+			null
+		);
+		$wp_scripts->add_data( $handle, 'amp_script_attributes', array(
+			'async'          => true,
+			'custom-element' => 'amp-ad',
+		) );
+
+	}
+
+	/**
 	 * To load resources for AMP.
 	 *
 	 * @return void
@@ -172,7 +209,10 @@ class AMP_AdManager {
 		$should_load_resources = self::$amp_settings['load-amp-resources'];
 
 		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
-			load_template( AMP_ADMANAGER_ROOT . '/template-parts/tags-head.php' );
+			if ( ! wp_script_is( 'amp-runtime' ) ) {
+				wp_enqueue_script( 'amp-runtime' );
+				wp_enqueue_script( 'amp-ad' ); // @todo This needs to check, it throws Error: amp-ad is already registered.
+			}
 		}
 	}
 }
