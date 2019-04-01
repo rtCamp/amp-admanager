@@ -88,9 +88,9 @@ class AMP_AdManager {
 	 *
 	 * @return string
 	 */
-	public static function get_adm_ad( $attr = [], $echo = false ) {
+	public static function get_amp_ad( $attr = [], $echo = false ) {
 
-		if ( empty( $atts ) ) {
+		if ( empty( $attr ) ) {
 			return;
 		}
 

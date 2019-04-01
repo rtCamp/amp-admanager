@@ -61,7 +61,7 @@ class Shortcode {
 
 		$atts['breakpoint'] = json_decode( $atts['breakpoint'], true );
 
-		$ad_html = AMP_AdManager::get_adm_ad( $atts );
+		$ad_html = AMP_AdManager::get_amp_ad( $atts );
 
 		if ( empty( $ad_html ) ) {
 			return $content;
