@@ -15,6 +15,26 @@ namespace AMP_AdManager;
 class AMP_AdManager {
 
 	/**
+	 * DFP Network ID.
+	 *
+	 * @var string
+	 */
+	public static $dfp_network_id;
+
+	/**
+	 * Class Constructor.
+	 */
+	public function __construct() {
+
+		self::$dfp_network_id = get_option( 'dfp-network-id' );
+
+		/**
+		 * Actions.
+		 */
+		add_action( 'wp_head', [ $this, 'load_scripts' ] );
+	}
+
+	/**
 	 * Function used to create ads data.
 	 *
 	 * @return array Dfp setTargeting ad data.
@@ -103,7 +123,7 @@ class AMP_AdManager {
 				$attr['width'],
 				$attr['height'],
 				self::get_slot_media_query( $breakpoint ),
-				'/' . $attr['network-id'] . '/' . $attr['ad-unit'],
+				'/' . self::$dfp_network_id . '/' . $attr['ad-unit'],
 				wp_json_encode( self::get_dfp_ad_targeting_data() ),
 				$breakpoint['sizes']
 			);
@@ -140,5 +160,19 @@ class AMP_AdManager {
 		}
 
 		return $media;
+	}
+
+	/**
+	 * To load resources for AMP.
+	 *
+	 * @return void
+	 */
+	public function load_scripts() {
+
+		$should_load_resources = get_option( 'load-amp-resources' );
+
+		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
+			load_template( AMP_ADMANAGER_ROOT . '/template-parts/tags-head.php' );
+		}
 	}
 }
