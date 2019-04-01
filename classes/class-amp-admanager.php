@@ -75,6 +75,8 @@ class AMP_AdManager {
 
 		$dfp_ad_data['contentType'] = $content_type;
 
+		$dfp_ad_data = apply_filters( 'amp_dfp_targeting_data', $dfp_ad_data );
+
 		return $dfp_ad_data;
 	}
 
