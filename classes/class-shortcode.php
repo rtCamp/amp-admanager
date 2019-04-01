@@ -7,8 +7,11 @@
  * @package AMP_AdManager
  */
 
-namespace AMP_AdManager\Shortcode;
+namespace AMP_AdManager;
 
+/**
+ * Class Shortcode.
+ */
 class Shortcode {
 
 	/**
@@ -51,7 +54,6 @@ class Shortcode {
 			'width'      => '300',
 			'height'     => '250',
 			'ad-unit'    => '',
-			'json'       => '',
 			'breakpoint' => wp_json_encode( $ad_breakpoint ),
 		];
 
@@ -59,7 +61,7 @@ class Shortcode {
 
 		$atts['breakpoint'] = json_decode( $atts['breakpoint'], true );
 
-		$ad_html = $this->get_amp_ad_html( $atts );
+		$ad_html = AMP_AdManager::get_adm_ad( $atts );
 
 		if ( empty( $ad_html ) ) {
 			return $content;
@@ -68,61 +70,4 @@ class Shortcode {
 		return $ad_html . $content;
 
 	}
-
-	/**
-	 * To get amp ad html code for all breakpoints.
-	 *
-	 * @param array $atts shortcode attributes.
-	 *
-	 * @return string
-	 */
-	public function get_amp_ad_html( $atts = [] ) {
-
-		if ( empty( $atts ) ) {
-			return;
-		}
-
-		$ad_html = '';
-
-		foreach ( $atts['breakpoint'] as $breakpoint ) {
-			$ad_html .= sprintf(
-				'<amp-ad width="%s" layout="fixed" height="%s" media="%s" type="doubleclick" data-slot="%s" json="" data-multi-size="" data-multi-size-validation="false"></amp-ad>',
-				$atts['width'],
-				$atts['height'],
-				$this->get_slot_media_query( $breakpoint ),
-				'/' . $atts['network-id'] . '/' . $atts['ad-unit'],
-				$atts['json'],
-				$breakpoint['sizes']
-			);
-		}
-
-		return $ad_html;
-	}
-
-	/**
-	 * To get ad slot media query in proper format.
-	 *
-	 * @param array $breakpoint ad-slot brekpoint data.
-	 *
-	 * @return string
-	 */
-	public function get_slot_media_query( $breakpoint ) {
-
-		$media = '';
-
-		if ( ! empty( $breakpoint['min'] ) ) {
-			$media = '(min-width: ' . $breakpoint['min'] . 'px)';
-		}
-
-		if ( ! empty( $breakpoint['min'] ) && ! empty( $breakpoint['max'] ) ) {
-			$media .= ' and ';
-		}
-
-		if ( $breakpoint['max'] ) {
-			$media .= '(max-width: ' . $breakpoint['max'] . 'px)';
-		}
-
-		return $media;
-	}
-
 }
