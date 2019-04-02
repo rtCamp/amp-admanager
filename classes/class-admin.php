@@ -80,7 +80,7 @@ class Admin {
 		add_settings_section(
 			'amp-admanager-general-settings',
 			__( 'Global Settings', 'amp-admanager' ),
-			__return_empty_string(),
+			'__return_empty_string',
 			'amp-admanager-menu-page'
 		);
 
