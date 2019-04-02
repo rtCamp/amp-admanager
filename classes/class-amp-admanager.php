@@ -121,20 +121,15 @@ class AMP_AdManager {
 			return;
 		}
 
-		$ad_html = '';
-
-		foreach ( $attr['breakpoint'] as $breakpoint ) {
-
-			$ad_html .= sprintf(
-				'<amp-ad width="%s" layout="fixed" height="%s" media="%s" type="doubleclick" data-slot="%s" json="%s" data-multi-size="%s" data-multi-size-validation="false"></amp-ad>',
-				$attr['width'],
-				$attr['height'],
-				self::get_slot_media_query( $breakpoint ),
-				'/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'],
-				wp_json_encode( self::get_dfp_ad_targeting_data() ),
-				$breakpoint['sizes']
-			);
-		}
+		$ad_html = sprintf(
+			'<amp-ad width="%s" layout="fixed" height="%s" media="%s" type="doubleclick" data-slot="%s" json="%s" data-multi-size="%s" data-multi-size-validation="false"></amp-ad>',
+			$attr['width'],
+			$attr['height'],
+			self::get_slot_media_query( $attr['breakpoint'] ),
+			'/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'],
+			wp_json_encode( self::get_dfp_ad_targeting_data() ),
+			$attr['breakpoint']['sizes']
+		);
 
 		if ( $echo ) {
 			echo $ad_html; // phpcs:ignore
