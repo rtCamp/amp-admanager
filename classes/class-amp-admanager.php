@@ -36,7 +36,9 @@ class AMP_AdManager {
 		/**
 		 * Filters.
 		 */
-		add_filter( 'script_loader_tag', [ $this, 'add_script_async_attribute' ], 10, 2 );
+		if ( ! is_admin() ) {
+			add_filter( 'script_loader_tag', [ $this, 'add_script_async_attribute' ], 10, 2 );
+		}
 	}
 
 	/**
@@ -178,7 +180,7 @@ class AMP_AdManager {
 	public function add_script_async_attribute( $tag, $handle ) {
 
 		if ( 'amp-runtime' !== $handle || false !== strpos( $tag, 'async' ) ) {
-			return;
+			return $tag;
 		}
 
 		$tag = preg_replace(
