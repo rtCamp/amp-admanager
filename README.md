@@ -35,5 +35,5 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 
 ## Authors
 
-* **Vishal Dodiya**
 * **Pradeep Sonawane**
+* **Vishal Dodiya**
