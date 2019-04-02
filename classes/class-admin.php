@@ -42,8 +42,8 @@ class Admin {
 	 */
 	public function amp_admanager_menu() {
 		add_menu_page(
-			'AMP AdManager Settings',
-			'AMP AdManager',
+			__( 'AMP AdManager Settings', 'amp-admanager' ),
+			__( 'AMP AdManager', 'amp-admanager' ),
 			'manage_options',
 			'amp-admanager-menu',
 			[ $this, 'amp_admanager_menu_html' ]
@@ -79,14 +79,14 @@ class Admin {
 
 		add_settings_section(
 			'amp-admanager-general-settings',
-			'Global Settings',
+			__( 'Global Settings', 'amp-admanager' ),
 			__return_empty_string(),
 			'amp-admanager-menu-page'
 		);
 
 		add_settings_field(
 			'dfp-network-id',
-			'DFP Network ID',
+			__( 'DFP Network ID', 'amp-admanager' ),
 			[ $this, 'get_text_field' ],
 			'amp-admanager-menu-page',
 			'amp-admanager-general-settings'
@@ -94,7 +94,7 @@ class Admin {
 
 		add_settings_field(
 			'load-amp-resources',
-			'Load AMP Resources For Non AMP Site',
+			__( 'Load AMP Resources For Non AMP Site', 'amp-admanager' ),
 			[ $this, 'get_checkbox_field' ],
 			'amp-admanager-menu-page',
 			'amp-admanager-general-settings'

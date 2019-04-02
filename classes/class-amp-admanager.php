@@ -32,7 +32,11 @@ class AMP_AdManager {
 		 * Actions.
 		 */
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_scripts' ] );
-		add_action( 'wp_default_scripts', [ $this, 'add_amp_default_scripts' ] );
+
+		/**
+		 * Filters.
+		 */
+		add_filter( 'script_loader_tag', [ $this, 'add_script_async_attribute' ], 10, 2 );
 	}
 
 	/**
@@ -164,39 +168,27 @@ class AMP_AdManager {
 	}
 
 	/**
-	 * Registers amp default resources.
+	 * Add async parameter in amp scripts while enqueueing.
 	 *
-	 * @param WP_Scripts $wp_scripts global WP_Scrips object.
+	 * @param string $tag    enqueueing script tag.
+	 * @param string $handle script enqueue handle.
 	 *
-	 * @return void
+	 * @return string
 	 */
-	public function add_amp_default_scripts( $wp_scripts ) {
+	public function add_script_async_attribute( $tag, $handle ) {
 
-		// AMP Runtime script registration for wp_enqueue_script.
-		$handle = 'amp-runtime';
-		$wp_scripts->add(
-			$handle,
-			'https://cdn.ampproject.org/v0.js',
-			array(),
-			null
+		if ( 'amp-runtime' !== $handle || false !== strpos( $tag, 'async' ) ) {
+			return;
+		}
+
+		$tag = preg_replace(
+			':(?=></script>):',
+			'async',
+			$tag,
+			1
 		);
-		$wp_scripts->add_data( $handle, 'amp_script_attributes', array(
-			'async' => true,
-		) );
 
-		// AMP Ad script registration for wp_enqueue_script.
-		$handle = 'amp-ad';
-		$wp_scripts->add(
-			$handle,
-			'https://cdn.ampproject.org/v0/amp-ad-0.1.js',
-			array(),
-			null
-		);
-		$wp_scripts->add_data( $handle, 'amp_script_attributes', array(
-			'async'          => true,
-			'custom-element' => 'amp-ad',
-		) );
-
+		return $tag;
 	}
 
 	/**
@@ -210,8 +202,20 @@ class AMP_AdManager {
 
 		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
 			if ( ! wp_script_is( 'amp-runtime' ) ) {
+
+				wp_register_script(
+					'amp-runtime',
+					'https://cdn.ampproject.org/v0.js'
+				);
+
+				/**
+				 * Adding amp-runtime only.
+				 * loading amp-ad throws Error: amp-ad is already registered.
+				 * This is because custom-element.js loads the amp-ad script.
+				 * amp-ad is included in amp-runtime so we don't need to enqueue it explicitly.
+				 * https://www.ampproject.org/docs/fundamentals/spec#resourcess
+				 */
 				wp_enqueue_script( 'amp-runtime' );
-				wp_enqueue_script( 'amp-ad' ); // @todo This needs to check, it throws Error: amp-ad is already registered.
 			}
 		}
 	}
