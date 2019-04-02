@@ -15,6 +15,31 @@ namespace AMP_AdManager;
 class AMP_AdManager {
 
 	/**
+	 * DFP Network ID.
+	 *
+	 * @var string
+	 */
+	public static $amp_settings;
+
+	/**
+	 * Class Constructor.
+	 */
+	public function __construct() {
+
+		self::$amp_settings = get_option( 'amp-admanager-menu-settings' );
+
+		/**
+		 * Actions.
+		 */
+		add_action( 'wp_enqueue_scripts', [ $this, 'load_scripts' ] );
+
+		/**
+		 * Filters.
+		 */
+		add_filter( 'script_loader_tag', [ $this, 'add_script_async_attribute' ], 10, 2 );
+	}
+
+	/**
 	 * Function used to create ads data.
 	 *
 	 * @return array Dfp setTargeting ad data.
@@ -103,7 +128,7 @@ class AMP_AdManager {
 				$attr['width'],
 				$attr['height'],
 				self::get_slot_media_query( $breakpoint ),
-				'/' . $attr['network-id'] . '/' . $attr['ad-unit'],
+				'/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'],
 				wp_json_encode( self::get_dfp_ad_targeting_data() ),
 				$breakpoint['sizes']
 			);
@@ -140,5 +165,59 @@ class AMP_AdManager {
 		}
 
 		return $media;
+	}
+
+	/**
+	 * Add async parameter in amp scripts while enqueueing.
+	 *
+	 * @param string $tag    enqueueing script tag.
+	 * @param string $handle script enqueue handle.
+	 *
+	 * @return string
+	 */
+	public function add_script_async_attribute( $tag, $handle ) {
+
+		if ( 'amp-runtime' !== $handle || false !== strpos( $tag, 'async' ) ) {
+			return;
+		}
+
+		$tag = preg_replace(
+			':(?=></script>):',
+			'async',
+			$tag,
+			1
+		);
+
+		return $tag;
+	}
+
+	/**
+	 * To load resources for AMP.
+	 *
+	 * @return void
+	 */
+	public function load_scripts() {
+
+		$should_load_resources = self::$amp_settings['load-amp-resources'];
+
+		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
+			if ( ! wp_script_is( 'amp-runtime' ) ) {
+
+				/**
+				 * Adding amp-runtime only.
+				 * loading amp-ad throws Error: amp-ad is already registered.
+				 * This is because custom-element.js loads the amp-ad script.
+				 * amp-ad is included in amp-runtime so we don't need to enqueue it explicitly.
+				 * https://www.ampproject.org/docs/fundamentals/spec#resourcess
+				 */
+				wp_enqueue_script(
+					'amp-runtime',
+					'https://cdn.ampproject.org/v0.js'
+				);
+
+				// Load template for amp boilerplate style sheet.
+				load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-boilerplate-css.php' );
+			}
+		}
 	}
 }

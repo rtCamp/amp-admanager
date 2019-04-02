@@ -17,8 +17,10 @@
 define( 'AMP_ADMANAGER_VERSION', '1.0.0' );
 define( 'AMP_ADMANAGER_ROOT', __DIR__ );
 
+require_once AMP_ADMANAGER_ROOT . '/classes/class-admin.php';
 require_once AMP_ADMANAGER_ROOT . '/classes/class-amp-admanager.php';
 require_once AMP_ADMANAGER_ROOT . '/classes/class-shortcode.php';
 
+new AMP_AdManager\Admin();
 new AMP_AdManager\AMP_AdManager();
 new AMP_AdManager\Shortcode();

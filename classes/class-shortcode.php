@@ -50,7 +50,6 @@ class Shortcode {
 		];
 
 		$default_attr = [
-			'network-id' => '104683778',
 			'width'      => '300',
 			'height'     => '250',
 			'ad-unit'    => '',
