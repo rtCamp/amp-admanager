@@ -32,21 +32,9 @@ class Shortcode {
 	public function render_amp_ad( $atts = [], $content = '' ) {
 
 		$ad_breakpoint = [
-			[
-				'min'   => '',
-				'max'   => '499',
-				'sizes' => '320x50,300x100',
-			],
-			[
-				'min'   => '500',
-				'max'   => '799',
-				'sizes' => '468x60',
-			],
-			[
-				'min'   => '800',
-				'max'   => '',
-				'sizes' => '728x90,600x90',
-			],
+			'min'   => '',
+			'max'   => '499',
+			'sizes' => '320x50,300x100',
 		];
 
 		$default_attr = [
