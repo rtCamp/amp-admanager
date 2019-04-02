@@ -203,11 +203,6 @@ class AMP_AdManager {
 		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
 			if ( ! wp_script_is( 'amp-runtime' ) ) {
 
-				wp_register_script(
-					'amp-runtime',
-					'https://cdn.ampproject.org/v0.js'
-				);
-
 				/**
 				 * Adding amp-runtime only.
 				 * loading amp-ad throws Error: amp-ad is already registered.
@@ -215,7 +210,13 @@ class AMP_AdManager {
 				 * amp-ad is included in amp-runtime so we don't need to enqueue it explicitly.
 				 * https://www.ampproject.org/docs/fundamentals/spec#resourcess
 				 */
-				wp_enqueue_script( 'amp-runtime' );
+				wp_enqueue_script(
+					'amp-runtime',
+					'https://cdn.ampproject.org/v0.js'
+				);
+
+				// Load template for amp boilerplate style sheet.
+				load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-boilerplate-css.php' );
 			}
 		}
 	}
