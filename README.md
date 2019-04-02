@@ -7,7 +7,7 @@ AMP ads for all WordPress sites (AMP and Non-AMP)
 [ampad width="<slot-width>" height="<slot-height>" ad-unit="<ad-unit-name>" breakpoint='{"min":"","max":"499","sizes":"320x50,300x100,300x50"}']
 ```
 
-## Call Ad in File
+## Call Ad in Template
 
 ```php
 $attr = [
