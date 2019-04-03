@@ -125,10 +125,10 @@ class AMP_AdManager {
 			'<amp-ad width="%s" layout="fixed" height="%s" media="%s" type="doubleclick" data-slot="%s" json="%s" data-multi-size="%s" data-multi-size-validation="false"></amp-ad>',
 			$attr['width'],
 			$attr['height'],
-			self::get_slot_media_query( $attr['breakpoint'] ),
+			self::get_slot_media_query( $attr['min'], $attr['max'] ),
 			'/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'],
 			wp_json_encode( self::get_dfp_ad_targeting_data() ),
-			$attr['breakpoint']['sizes']
+			$attr['sizes']
 		);
 
 		if ( $echo ) {
@@ -141,24 +141,25 @@ class AMP_AdManager {
 	/**
 	 * To get ad slot media query in proper format.
 	 *
-	 * @param array $breakpoint ad-slot brekpoint data.
+	 * @param string $min min size of amp-ad media query.
+	 * @param string $max max size of amp-ad media query.
 	 *
 	 * @return string
 	 */
-	public static function get_slot_media_query( $breakpoint ) {
+	public static function get_slot_media_query( $min, $max ) {
 
 		$media = '';
 
-		if ( ! empty( $breakpoint['min'] ) ) {
-			$media = '(min-width: ' . $breakpoint['min'] . 'px)';
+		if ( ! empty( $min ) ) {
+			$media = '(min-width: ' . $min . 'px)';
 		}
 
-		if ( ! empty( $breakpoint['min'] ) && ! empty( $breakpoint['max'] ) ) {
+		if ( ! empty( $media ) && ! empty( $max ) ) {
 			$media .= ' and ';
 		}
 
-		if ( $breakpoint['max'] ) {
-			$media .= '(max-width: ' . $breakpoint['max'] . 'px)';
+		if ( ! empty( $max ) ) {
+			$media .= '(max-width: ' . $max . 'px)';
 		}
 
 		return $media;

@@ -31,22 +31,16 @@ class Shortcode {
 	 */
 	public function render_amp_ad( $atts = [], $content = '' ) {
 
-		$ad_breakpoint = [
-			'min'   => '',
-			'max'   => '499',
-			'sizes' => '320x50,300x100',
-		];
-
 		$default_attr = [
-			'width'      => '300',
-			'height'     => '250',
-			'ad-unit'    => '',
-			'breakpoint' => wp_json_encode( $ad_breakpoint ),
+			'width'   => '300',
+			'height'  => '250',
+			'ad-unit' => '',
+			'min'     => '',
+			'max'     => '',
+			'sizes'   => '320x50,300x100',
 		];
 
 		$atts = shortcode_atts( $default_attr, $atts );
-
-		$atts['breakpoint'] = json_decode( $atts['breakpoint'], true );
 
 		$ad_html = AMP_AdManager::get_amp_ad( $atts );
 
