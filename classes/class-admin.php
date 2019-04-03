@@ -66,7 +66,7 @@ class Admin {
 	}
 
 	/**
-	 * Undocumented function
+	 * Register AMP Admanager menu setting section and fields.
 	 *
 	 * @return void
 	 */

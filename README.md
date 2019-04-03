@@ -6,21 +6,19 @@ AMP ads for all WordPress sites (AMP and Non-AMP)
 #### As Shortcode
 
 ```
-[ampad width="<slot-width>" height="<slot-height>" ad-unit="<ad-unit-name>" breakpoint='{"min":"","max":"499","sizes":"320x50,300x100,300x50"}']
+[ampad width="<slot-width>" height="<slot-height>" ad-unit="<ad-unit-name>" min="" max="499" sizes="320x50,300x100,300x50"]
 ```
 
 #### In Template
 
 ```php
 $attr = [
-    'width'      => '<slot-width>',
-    'height'     => '<slot-height>',
-    'ad-unit'    => '<ad-unit-name>',
-    'breakpoint' => [
-        'min'   => '',
-        'max'   => '499',
-        'sizes' => '320x50,300x100',
-    ],
+    'width'   => '<slot-width>',
+    'height'  => '<slot-height>',
+    'ad-unit' => '<ad-unit-name>',
+    'min'     => '',
+    'max'     => '499',
+    'sizes'   => '320x50,300x100',
 ];
 
 AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
