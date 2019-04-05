@@ -54,29 +54,29 @@ class AMP_AdManager {
 
 		if ( is_category() || is_tag() || is_archive() ) {
 
-			$content_type = 'Listing Page';
+			$content_type = 'listingpage';
 
 			if ( is_category() ) {
 
-				$dfp_ad_data['categoryPage'] = $queried->name;
+				$dfp_ad_data['categoryPage'] = $queried->slug;
 			}
 
 			if ( is_author() ) {
 
-				if ( isset( $queried->data->display_name ) && null !== $queried->data->display_name ) {
-					$dfp_ad_data['authorPage'] = $queried->data->display_name;
-				} elseif ( isset( $queried->display_name ) && null !== $queried->display_name ) {
-					$dfp_ad_data['authorPage'] = $queried->display_name;
+				if ( isset( $queried->data->username ) && null !== $queried->data->username ) {
+					$dfp_ad_data['authorPage'] = $queried->data->username;
+				} elseif ( isset( $queried->username ) && null !== $queried->username ) {
+					$dfp_ad_data['authorPage'] = $queried->username;
 				}
 			}
 
 			if ( is_tag() ) {
 
-				$dfp_ad_data['tagPage'] = $queried->name;
+				$dfp_ad_data['tagPage'] = $queried->slug;
 			}
 		} elseif ( is_front_page() || is_home() ) {
 
-			$content_type = 'Home Page';
+			$content_type = 'homepage';
 		} elseif ( is_single() ) {
 
 			$content_type = ucwords( $queried->post_type );
@@ -84,7 +84,7 @@ class AMP_AdManager {
 				$queried->ID,
 				'category',
 				[
-					'fields' => 'names',
+					'fields' => 'slugs',
 				]
 			);
 
@@ -93,14 +93,14 @@ class AMP_AdManager {
 				$queried->ID,
 				'post_tag',
 				[
-					'fields' => 'names',
+					'fields' => 'slugs',
 				]
 			);
 
 			$dfp_ad_data['tag'] = $tag;
 		}
 
-		$dfp_ad_data['contentType'] = $content_type;
+		$dfp_ad_data['contentType'] = sanitize_title( $content_type );
 		$dfp_ad_data['siteDomain']  = wp_parse_url( home_url(), PHP_URL_HOST );
 		$dfp_ad_data['adId']        = $attr['ad-unit'];
 		$dfp_ad_data['adUnit']      = '/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'];
