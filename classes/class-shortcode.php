@@ -37,7 +37,7 @@ class Shortcode {
 			'ad-unit' => '',
 			'min'     => '',
 			'max'     => '',
-			'sizes'   => '320x50,300x100',
+			'sizes'   => '300x250,300x100',
 		];
 
 		$atts = shortcode_atts( $default_attr, $atts );
