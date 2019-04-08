@@ -103,7 +103,6 @@ class AMP_AdManager {
 		$dfp_ad_data['contentType'] = sanitize_title( $content_type );
 		$dfp_ad_data['siteDomain']  = wp_parse_url( home_url(), PHP_URL_HOST );
 		$dfp_ad_data['adId']        = $attr['ad-unit'];
-		$dfp_ad_data['adUnit']      = '/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'];
 
 		$final_ad_data['targeting'] = apply_filters( 'amp_dfp_targeting_data', $dfp_ad_data, $attr );
 
