@@ -232,7 +232,13 @@ class AMP_AdManager {
 			return;
 		}
 
-		// Load template for amp boilerplate style sheet.	
-		load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-boilerplate-css.php' );
+		$should_load_resources = self::$amp_settings['load-amp-resources'];
+
+		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
+
+			// Load amp-boilerplate css template only if `load amp resources` is enabled.
+			load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-boilerplate-css.php' );
+
+		}
 	}
 }
