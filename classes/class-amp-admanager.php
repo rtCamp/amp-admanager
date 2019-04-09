@@ -32,6 +32,8 @@ class AMP_AdManager {
 		 * Actions.
 		 */
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_scripts' ] );
+		add_action( 'wp_head', [ $this, 'load_amp_boilerplate_css' ] );
+
 
 		/**
 		 * Filters.
@@ -200,7 +202,7 @@ class AMP_AdManager {
 
 		$should_load_resources = self::$amp_settings['load-amp-resources'];
 
-		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
+		if ( ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) && ( function_exists( 'is_amp_endpoint' ) && ! is_amp_endpoint() ) ) {
 			if ( ! wp_script_is( 'amp-runtime' ) ) {
 
 				/**
@@ -214,10 +216,29 @@ class AMP_AdManager {
 					'amp-runtime',
 					'https://cdn.ampproject.org/v0.js'
 				);
-
-				// Load template for amp boilerplate style sheet.
-				load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-boilerplate-css.php' );
 			}
+		}
+	}
+
+	/**
+	 * Load amp boilerplate css only on Non-AMP pages for better elements loading.
+	 *
+	 * @return void|string
+	 */
+	public function load_amp_boilerplate_css() {
+		
+		// Check if current page is amp page. 
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return;
+		}
+
+		$should_load_resources = self::$amp_settings['load-amp-resources'];
+
+		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
+
+			// Load amp-boilerplate css template only if `load amp resources` is enabled.
+			load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-boilerplate-css.php' );
+
 		}
 	}
 }
