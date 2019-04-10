@@ -29,18 +29,10 @@ class AMP_AdManager {
 		self::$amp_settings = get_option( 'amp-admanager-menu-settings' );
 
 		/**
-		 * Actions.
+		 * Actions to load AMP resources and more.
 		 */
-		add_action( 'wp_enqueue_scripts', [ $this, 'load_scripts' ] );
-		add_action( 'wp_head', [ $this, 'load_amp_boilerplate_css' ] );
+		add_action( 'wp_head', [ $this, 'load_amp_resources' ], 0 );
 
-
-		/**
-		 * Filters.
-		 */
-		if ( ! is_admin() ) {
-			add_filter( 'script_loader_tag', [ $this, 'add_script_async_attribute' ], 10, 2 );
-		}
 	}
 
 	/**
@@ -191,63 +183,13 @@ class AMP_AdManager {
 	}
 
 	/**
-	 * Add async parameter in amp scripts while enqueueing.
-	 *
-	 * @param string $tag    enqueueing script tag.
-	 * @param string $handle script enqueue handle.
-	 *
-	 * @return string
-	 */
-	public function add_script_async_attribute( $tag, $handle ) {
-
-		if ( 'amp-runtime' !== $handle || false !== strpos( $tag, 'async' ) ) {
-			return $tag;
-		}
-
-		$tag = preg_replace(
-			':(?=></script>):',
-			'async',
-			$tag,
-			1
-		);
-
-		return $tag;
-	}
-
-	/**
-	 * To load resources for AMP.
+	 * Load amp boilerplate css only on Non-AMP pages for better elements loading.
+	 * Also loads `amp-runtime` script at the top of wp_head due to script sequencing issues.
 	 *
 	 * @return void
 	 */
-	public function load_scripts() {
+	public function load_amp_resources() {
 
-		$should_load_resources = self::$amp_settings['load-amp-resources'];
-
-		if ( ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) && ( function_exists( 'is_amp_endpoint' ) && ! is_amp_endpoint() ) ) {
-			if ( ! wp_script_is( 'amp-runtime' ) ) {
-
-				/**
-				 * Adding amp-runtime only.
-				 * loading amp-ad throws Error: amp-ad is already registered.
-				 * This is because custom-element.js loads the amp-ad script.
-				 * amp-ad is included in amp-runtime so we don't need to enqueue it explicitly.
-				 * https://www.ampproject.org/docs/fundamentals/spec#resourcess
-				 */
-				wp_enqueue_script(
-					'amp-runtime',
-					'https://cdn.ampproject.org/v0.js'
-				);
-			}
-		}
-	}
-
-	/**
-	 * Load amp boilerplate css only on Non-AMP pages for better elements loading.
-	 *
-	 * @return void|string
-	 */
-	public function load_amp_boilerplate_css() {
-		
 		// Check if current page is amp page. 
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			return;
@@ -257,8 +199,14 @@ class AMP_AdManager {
 
 		if ( ! empty( $should_load_resources ) && '1' === $should_load_resources ) {
 
-			// Load amp-boilerplate css template only if `load amp resources` is enabled.
-			load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-boilerplate-css.php' );
+			/**
+			 * Loads amp-boilerplate CSS and amp-runtime script at the top of wp_head.
+			 *
+			 * Only if `load amp resources` is enabled.
+			 *
+			 * @since 0.2
+			 */
+			load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-resources.php' );
 
 		}
 	}
