@@ -125,14 +125,35 @@ class AMP_AdManager {
 			return;
 		}
 
+		$data_slot           = sprintf( '/%s/%s', self::$amp_settings['dfp-network-id'], $attr['ad-unit'] );
+		$media_query         = self::get_slot_media_query( $attr['min'], $attr['max'] );
+
+		/**
+		 * Encode targeting data for json attribute in amp-ad.
+		 */
+		$targeting_data_json = wp_json_encode( self::get_dfp_ad_targeting_data( $attr ) );
+
+		/**
+		 * Add given layout attribute in the amp-ad. Use `responsive` by default.
+		 * Supported layout attributes: fill, fixed, fixed-height, flex-item, intrinsic, nodisplay, responsive.
+		 * Ref - https://amp.dev/documentation/components/amp-ad doc.
+		 *
+		 * @since 0.2
+		 */
+		$layout = ( empty( $attr['layout'] ) ? 'responsive' : esc_attr( $attr['layout'] ) );
+
+		/**
+		 * amp-ad markup.
+		 */
 		$ad_html = sprintf(
-			'<amp-ad width="%s" layout="fixed" height="%s" media="%s" type="doubleclick" data-slot="%s" json=%s data-multi-size="%s" data-multi-size-validation="false"></amp-ad>',
-			$attr['width'],
-			$attr['height'],
-			self::get_slot_media_query( $attr['min'], $attr['max'] ),
-			'/' . self::$amp_settings['dfp-network-id'] . '/' . $attr['ad-unit'],
-			wp_json_encode( self::get_dfp_ad_targeting_data( $attr ) ),
-			$attr['sizes']
+			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" ></amp-ad>',
+			esc_attr( $attr['width'] ),
+			esc_attr( $attr['height'] ),
+			esc_attr( $media_query ),
+			esc_attr( $data_slot ),
+			esc_attr( $targeting_data_json ),
+			esc_attr( $attr['sizes'] ),
+			esc_attr( $layout )
 		);
 
 		if ( $echo ) {

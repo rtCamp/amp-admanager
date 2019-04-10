@@ -38,6 +38,7 @@ class Shortcode {
 			'min'     => '',
 			'max'     => '',
 			'sizes'   => '300x250,300x100',
+			'layout'  => 'responsive'
 		];
 
 		$atts = shortcode_atts( $default_attr, $atts );
