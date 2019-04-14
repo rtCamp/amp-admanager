@@ -24,19 +24,24 @@ Works without AMP plugin as well for Non-AMP pages.
 #### As Shortcode
 
 ```
-[ampad width="<slot-width>" height="<slot-height>" ad-unit="<ad-unit-name>" min="" max="499" sizes="320x50,300x100,300x50"]
+[ampad width="<slot-width>" height="<slot-height>" 
+ad-unit="<ad-unit-name>" min="" max="499" 
+sizes="320x50,300x100,300x50" 
+custom-targeting="key1:value1, key2:value2"]
 ```
 
 #### In Template
 
 ```php
 $attr = [
-    'width'   => '<slot-width>',
-    'height'  => '<slot-height>',
-    'ad-unit' => '<ad-unit-name>',
-    'min'     => '',
-    'max'     => '499',
-    'sizes'   => '320x50,300x100',
+	'width'     => '<slot-width>',
+	'height'    => '<slot-height>',
+	'ad-unit'   => '<ad-unit-name>',
+	'min'       => '',
+	'max'       => '499',
+	'sizes'     => '320x50,300x100',
+	'layout'    => 'responsive',
+	'custom-targeting' => 'key1:value1, key2:value2'
 ];
 
 AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
@@ -53,3 +58,14 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 
 * **Pradeep Sonawane**
 * **Vishal Dodiya**
+
+## Change Log
+
+### v0.2 (14-04-2016)
+* Fix shortcode attributes function.
+* Add support for user defined targeting with custom-targeting attribute in [ampad]. 
+* Type casting for Domain variable.
+* Add layout attribute in shortcode for <amp-ad> layout support.
+
+### v0.1
+* Basic plugin with ampad shortcode.

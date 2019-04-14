@@ -95,10 +95,14 @@ class AMP_AdManager {
 		}
 
 		$dfp_ad_data['contentType'] = sanitize_title( $content_type );
-		$dfp_ad_data['siteDomain']  = wp_parse_url( home_url(), PHP_URL_HOST );
-		$dfp_ad_data['adId']        = $attr['ad-unit'];
+		$dfp_ad_data['siteDomain']  = (string) wp_parse_url( home_url(), PHP_URL_HOST );
+		$dfp_ad_data['adId']        = trim( $attr['ad-unit'] ); // Remove trailing spaces.
 
-		$final_ad_data['targeting'] = apply_filters( 'amp_dfp_targeting_data', $dfp_ad_data, $attr );
+		if ( isset( $attr['targeting'] ) ) {
+			$final_ad_data['targeting'] = array_unique( array_merge( $dfp_ad_data, $attr['targeting'] ) );
+		}
+
+		$final_ad_data['targeting'] = apply_filters( 'amp_dfp_targeting_data', $final_ad_data['targeting'], $attr );
 
 		return $final_ad_data;
 	}
@@ -138,7 +142,7 @@ class AMP_AdManager {
 		 * amp-ad markup.
 		 */
 		$ad_html = sprintf(
-			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" ></amp-ad>',
+			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s"></amp-ad>',
 			esc_attr( $attr['width'] ),
 			esc_attr( $attr['height'] ),
 			esc_attr( $media_query ),
