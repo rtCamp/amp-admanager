@@ -98,6 +98,8 @@ class AMP_AdManager {
 		$dfp_ad_data['siteDomain']  = (string) wp_parse_url( home_url(), PHP_URL_HOST );
 		$dfp_ad_data['adId']        = trim( $attr['ad-unit'] ); // Remove trailing spaces.
 
+		$final_ad_data['targeting'] = $dfp_ad_data;
+
 		if ( isset( $attr['targeting'] ) ) {
 			$final_ad_data['targeting'] = array_unique( array_merge( $dfp_ad_data, $attr['targeting'] ) );
 		}
