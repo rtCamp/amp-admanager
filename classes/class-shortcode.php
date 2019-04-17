@@ -38,7 +38,7 @@ class Shortcode {
 			'min'              => '',
 			'max'              => '',
 			'sizes'            => '300x250,300x100',
-			'layout'           => 'responsive',
+			'layout'           => 'fixed',
 			'custom-targeting' => ''
 		];
 
