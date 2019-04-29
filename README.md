@@ -47,6 +47,29 @@ $attr = [
 AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 ```
 
+##### Parameters:
+
+1. `$attr` 
+(Array) These are passed directly to the `get_amp_ad` via template tag shown above or via shortcode.
+
+Default value: array
+```
+[
+	'width'            => '300',
+	'height'           => '250',
+	'network-id'       => '',
+	'ad-unit'          => '',
+	'min'              => '',
+	'max'              => '',
+	'sizes'            => '300x250,300x100',
+	'layout'           => 'fixed',
+	'custom-targeting' => ''
+]
+```
+
+1. `$echo` 
+(Boolean) Outputs amp-ad tag if true, returns amp-ad html as value otherwise.
+
 ## Development Flow
 
 * Create new branch from 'master'.
@@ -60,6 +83,9 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 * **Vishal Dodiya**
 
 ## Change Log
+
+### v0.3 (29-04-2016)
+* Add network id support in shortcode.
 
 ### v0.2 (14-04-2016)
 * Fix shortcode attributes function.
