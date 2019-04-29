@@ -126,13 +126,13 @@ class AMP_AdManager {
 		/**
 		 * Use network-id attribute for allowing other networks ads such as AdX.
 		 * Example:
-		 * data-slot="/23081961/ca-pub-5278973888786334-tag/greaterkashmir.com/greaterkashmir/greaterkashmir.com_300x250_AMP"
+		 * data-slot="/10000/another-adunit-code"
 		 *
 		 * By default, network id will be taken from amp-admanager plugin options page if network-id attribute is not provided.
 		 *
 		 * @since 0.3
 		 */
-		$network_id = ( ! empty( $attr['network-id'] ) ? $attr['network-id'] : self::$amp_settings['dfp-network-id'];
+		$network_id = ( ! empty( $attr['network-id'] ) ) ? $attr['network-id'] : self::$amp_settings['dfp-network-id'];
 		$data_slot  = sprintf( '/%s/%s', $network_id, $attr['ad-unit'] );
 
 		$media_query = self::get_slot_media_query( $attr['min'], $attr['max'] );
