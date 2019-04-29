@@ -34,6 +34,7 @@ class Shortcode {
 		$default_attr = [
 			'width'            => '300',
 			'height'           => '250',
+			'network-id'       => '',
 			'ad-unit'          => '',
 			'min'              => '',
 			'max'              => '',
