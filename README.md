@@ -2,7 +2,7 @@
 <a href="https://rtcamp.com/?ref=amp-admanager-repo" target="_blank"><img width="200"src="https://rtcamp.com/wp-content/uploads/2018/04/rtcamp-logo-1.svg"></a>
 </p>
 
-# AMP AdManager 0.2
+# AMP AdManager 0.3
 AMP ads for all WordPress sites (AMP and Non-AMP). 
 This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ads using `min` and `max` attributes.
 Works without AMP plugin as well for Non-AMP pages. 
@@ -47,6 +47,29 @@ $attr = [
 AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 ```
 
+##### Parameters:
+
+1. `$attr` 
+(Array) These are passed directly to the `get_amp_ad` via template tag shown above or via shortcode.
+
+Default value: array
+```
+[
+	'width'            => '300',
+	'height'           => '250',
+	'network-id'       => '',
+	'ad-unit'          => '',
+	'min'              => '',
+	'max'              => '',
+	'sizes'            => '300x250,300x100',
+	'layout'           => 'fixed',
+	'custom-targeting' => ''
+]
+```
+
+1. `$echo` 
+(Boolean) Outputs amp-ad tag if true, returns amp-ad html as value otherwise.
+
 ## Development Flow
 
 * Create new branch from 'master'.
@@ -60,6 +83,9 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 * **Vishal Dodiya**
 
 ## Change Log
+
+### v0.3 (29-04-2016)
+* Add network id support in shortcode.
 
 ### v0.2 (14-04-2016)
 * Fix shortcode attributes function.
