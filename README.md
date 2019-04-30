@@ -52,22 +52,22 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 1. `$attr` 
 (Array) These are passed directly to the `get_amp_ad` via template tag shown above or via shortcode.
 
-Default value: array
-```
-[
-	'width'            => '300',
-	'height'           => '250',
-	'network-id'       => '',
-	'ad-unit'          => '',
-	'min'              => '',
-	'max'              => '',
-	'sizes'            => '300x250,300x100',
-	'layout'           => 'fixed',
-	'custom-targeting' => ''
-]
-```
+	Default value: array
+	```
+	[
+		'width'            => '300',
+		'height'           => '250',
+		'network-id'       => '',
+		'ad-unit'          => '',
+		'min'              => '',
+		'max'              => '',
+		'sizes'            => '300x250,300x100',
+		'layout'           => 'fixed',
+		'custom-targeting' => ''
+	]
+	```
 
-1. `$echo` 
+2. `$echo` 
 (Boolean) Outputs amp-ad tag if true, returns amp-ad html as value otherwise.
 
 ## Development Flow
@@ -76,11 +76,6 @@ Default value: array
 * Name it appropriately, i.e., `feature/GH-<issue-number>-<name>`,`<context>/GH-<issue-number>-<what_it_is>`.
 * Create PR against `master`.
 * Request review for your changes and get approvals.
-
-## Authors
-
-* **Pradeep Sonawane**
-* **Vishal Dodiya**
 
 ## Change Log
 
