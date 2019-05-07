@@ -68,12 +68,13 @@ class AMP_AdManager {
 
 				$dfp_ad_data['tagPage'] = $queried->slug;
 			}
-		} elseif ( is_front_page() || is_home() ) {
+		} elseif ( is_front_page() ) {
 
 			$content_type = 'homepage';
+
 		} elseif ( is_single() ) {
 
-			$content_type = ucwords( $queried->post_type );
+			$content_type = $queried->post_type;
 			$category     = wp_get_post_terms(
 				$queried->ID,
 				'category',
