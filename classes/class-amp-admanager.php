@@ -83,7 +83,7 @@ class AMP_AdManager {
 				]
 			);
 
-			$dfp_ad_data['category'] = $category;
+			$dfp_ad_data['postCategories'] = $category;
 			$tag                     = wp_get_post_terms(
 				$queried->ID,
 				'post_tag',
@@ -92,7 +92,11 @@ class AMP_AdManager {
 				]
 			);
 
-			$dfp_ad_data['tag'] = $tag;
+			$dfp_ad_data['postTags'] = $tag;
+
+			// Add post_name and postid as targeting variable for single posts/pages.
+			$dfp_ad_data['postName'] = $queried->post_name;
+			$dfp_ad_data['postId']   = $queried->ID;
 		}
 
 		$dfp_ad_data['contentType'] = sanitize_title( $content_type );
