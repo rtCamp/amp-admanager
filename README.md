@@ -70,6 +70,21 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 2. `$echo` 
 (Boolean) Outputs amp-ad tag if true, returns amp-ad html as value otherwise.
 
+### Available targeting variables
+
+| Targeting Variable | Description |
+|--------------------|-------------|
+| author             | - post author username (string - lowercase)       |
+| contentType 	| - type of content e.g homepage, listingpage, post, page, cpt-name (string - lowercase) |
+| authorPage 	| - archive author page name (string - lowercase) |
+| categoryPage 	| - archive category page name (string - lowercase) |
+| tagPage 	| - archive tag page name (string - lowercase)  |
+| postCategories	| - post categories list (array) ["cat1", "cat2"] (all lowercase - slugs) |
+| postTags	| - post tags list (array) ["tag1", "tag2"] (all lowercase - slugs) |
+| postName	| - post name slug (string - lowercase)  |
+| postId	| - post id (numeric) |
+
+
 ## Development Flow
 
 * Create new branch from 'master'.
