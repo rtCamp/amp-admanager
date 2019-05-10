@@ -47,7 +47,7 @@ $attr = [
 AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 ```
 
-##### Parameters:
+	##### Parameters:
 
 1. `$attr` 
 (Array) These are passed directly to the `get_amp_ad` via template tag shown above or via shortcode.
@@ -80,7 +80,8 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 ## Change Log
 
 ### v0.4 (10-05-2019)
-* Add network id support in shortcode.
+* Add `postName` and `postId` targeting variables
+* Rename single post targeting variables - `postCategories`, `postTags`
 
 ### v0.3 (29-04-2019)
 * Add network id support in shortcode.
