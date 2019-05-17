@@ -60,9 +60,9 @@ class AMP_AdManager {
 
 			if ( is_author() ) {
 
-				if ( isset( $queried->data->username ) && null !== $queried->data->username ) {
+				if ( ! empty( $queried->data->username ) ) {
 					$dfp_ad_data['authorPage'] = $queried->data->username;
-				} elseif ( isset( $queried->username ) && null !== $queried->username ) {
+				} elseif ( ! empty( $queried->username ) ) {
 					$dfp_ad_data['authorPage'] = $queried->username;
 				}
 			}
@@ -109,10 +109,13 @@ class AMP_AdManager {
 		$final_ad_data = [];
 		$final_ad_data['targeting'] = $dfp_ad_data;
 
-		if ( isset( $attr['targeting'] ) ) {
+		if ( ! empty( $attr['targeting'] ) ) {
 			$final_ad_data['targeting'] = array_unique( array_merge( $dfp_ad_data, $attr['targeting'] ) );
 		}
 
+		/**
+		 * amp_dfp_targeting_data filter to customize targeting variable.
+		 */
 		$final_ad_data['targeting'] = apply_filters( 'amp_dfp_targeting_data', $final_ad_data['targeting'], $attr );
 
 		return $final_ad_data;
@@ -158,7 +161,7 @@ class AMP_AdManager {
 		 *
 		 * @since 0.2
 		 */
-		$layout = ( empty( $attr['layout'] ) ? 'responsive' : esc_attr( $attr['layout'] ) );
+		$layout = empty( $attr['layout'] ) ? 'responsive' : $attr['layout'];
 
 		/**
 		 * amp-ad markup.
@@ -174,25 +177,8 @@ class AMP_AdManager {
 			esc_attr( $layout )
 		);
 
-		$amp_tags = [];
-
-		/**
-		 * Update the allowed html tag attributes if new attributes are added to amp-ad.
-		 */
-		$amp_tags['amp-ad'] = [
-			'width'                      => true,
-			'height'                     => true,
-			'media'                      => true,
-			'type'                       => true,
-			'data-slot'                  => true,
-			'json'                       => true,
-			'data-multi-size'            => true,
-			'data-multi-size-validation' => true,
-			'layout'                     => true
-		];
-
 		if ( $echo ) {
-			echo wp_kses( $ad_html, $amp_tags );
+			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
 		}
 
 		return $ad_html;
