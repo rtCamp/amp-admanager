@@ -24,7 +24,7 @@ class Shortcode {
 	/**
 	 * AMP Ad rendering handler.
 	 *
-	 * @param array  $atts    shortcode attributes.
+	 * @param array  $attr    shortcode attributes.
 	 * @param string $content current post content.
 	 *
 	 * @return string

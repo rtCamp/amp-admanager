@@ -29,7 +29,8 @@ class AMP_AdManager {
 		self::$amp_settings = get_option( 'amp-admanager-menu-settings' );
 
 		/**
-		 * Actions to load AMP resources and more.
+		 * Actions to load AMP resources - amp-runtime and amp-boilerplate css.
+		 * It is important to use 0 priority to always load amp resources at the top of wp_head scripts.
 		 */
 		add_action( 'wp_head', [ $this, 'load_amp_resources' ], 0 );
 
@@ -37,8 +38,10 @@ class AMP_AdManager {
 
 	/**
 	 * Function used to create ads data.
+	 * 
+	 * @param	array $attr Array of attributes supplied in ampad shortcode.
 	 *
-	 * @return array Dfp setTargeting ad data.
+	 * @return	array Dfp setTargeting ad data.
 	 */
 	public static function get_dfp_ad_targeting_data( $attr ) {
 
@@ -103,6 +106,7 @@ class AMP_AdManager {
 		$dfp_ad_data['siteDomain']  = (string) wp_parse_url( home_url(), PHP_URL_HOST );
 		$dfp_ad_data['adId']        = trim( $attr['ad-unit'] ); // Remove trailing spaces.
 
+		$final_ad_data = [];
 		$final_ad_data['targeting'] = $dfp_ad_data;
 
 		if ( isset( $attr['targeting'] ) ) {
@@ -170,8 +174,25 @@ class AMP_AdManager {
 			esc_attr( $layout )
 		);
 
+		$amp_tags = [];
+
+		/**
+		 * Update the allowed html tag attributes if new attributes are added to amp-ad.
+		 */
+		$amp_tags['amp-ad'] = [
+			'width'                      => true,
+			'height'                     => true,
+			'media'                      => true,
+			'type'                       => true,
+			'data-slot'                  => true,
+			'json'                       => true,
+			'data-multi-size'            => true,
+			'data-multi-size-validation' => true,
+			'layout'                     => true
+		];
+
 		if ( $echo ) {
-			echo $ad_html; // phpcs:ignore
+			echo wp_kses( $ad_html, $amp_tags );
 		}
 
 		return $ad_html;
