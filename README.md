@@ -2,7 +2,7 @@
 <a href="https://rtcamp.com/?ref=amp-admanager-repo" target="_blank"><img width="200"src="https://rtcamp.com/wp-content/uploads/2018/04/rtcamp-logo-1.svg"></a>
 </p>
 
-# AMP AdManager 0.4
+# AMP AdManager 0.5
 AMP ads for all WordPress sites (AMP and Non-AMP). 
 This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ads using `min` and `max` attributes.
 Works without AMP plugin as well for Non-AMP pages. 
@@ -47,7 +47,7 @@ $attr = [
 AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 ```
 
-	##### Parameters:
+##### Parameters:
 
 1. `$attr` 
 (Array) These are passed directly to the `get_amp_ad` via template tag shown above or via shortcode.
@@ -93,6 +93,10 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 * Request review for your changes and get approvals.
 
 ## Change Log
+
+### v0.5 (17-05-2019)
+* PHPCS fixes.
+* Doc changes.
 
 ### v0.4 (10-05-2019)
 * Add `postName` and `postId` targeting variables
