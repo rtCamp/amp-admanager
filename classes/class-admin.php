@@ -107,7 +107,7 @@ class Admin {
 	 * @return void
 	 */
 	public function get_checkbox_field() {
-		echo sprintf( '<input name="amp-admanager-menu-settings[load-amp-resources]" type="checkbox" id="load-amp-resources" value="1" %s>', checked( $this->amp_settings['load-amp-resources'], '1', false ) );
+		printf( '<input name="amp-admanager-menu-settings[load-amp-resources]" type="checkbox" id="load-amp-resources" value="1" %s>', checked( $this->amp_settings['load-amp-resources'], '1', false ) );
 	}
 
 	/**
@@ -116,6 +116,6 @@ class Admin {
 	 * @return void
 	 */
 	public function get_text_field() {
-		echo sprintf( '<input name="amp-admanager-menu-settings[dfp-network-id]" type="text" id="dfp-network-id" value="%s" class="regular-text">', esc_attr( $this->amp_settings['dfp-network-id'] ) );
+		printf( '<input name="amp-admanager-menu-settings[dfp-network-id]" type="text" id="dfp-network-id" value="%s" class="regular-text">', esc_attr( $this->amp_settings['dfp-network-id'] ) );
 	}
 }

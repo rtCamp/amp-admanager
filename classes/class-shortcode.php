@@ -53,12 +53,12 @@ class Shortcode {
 		 *
 		 * @since 0.2
 		 */
-		if ( isset( $attr['custom-targeting'] ) && ! empty ( $attr['custom-targeting'] ) ) {
+		if ( ! empty ( $attr['custom-targeting'] ) ) {
 
 			// Separate out all key values in array.
 			$custom_targeting = explode( ',', trim( $attr['custom-targeting'] ) );
 
-			if ( is_array( $custom_targeting ) && ! empty ( $custom_targeting ) ) {
+			if ( ! empty ( $custom_targeting ) ) {
 
 				foreach ( $custom_targeting as $value ) {
 
