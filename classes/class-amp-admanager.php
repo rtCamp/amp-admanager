@@ -164,17 +164,25 @@ class AMP_AdManager {
 		$layout = empty( $attr['layout'] ) ? 'responsive' : $attr['layout'];
 
 		/**
+		 * Add data-loading-strategy attribute.
+		 * `prefer-viewability-over-views` will be default value.
+		 * Supported values: float value in the range of [0, 3]
+		 */
+		$data_loading_strategy = empty( $attr['data-loading-strategy'] ) ? 'prefer-viewability-over-views' : $attr['data-loading-strategy'];
+
+		/**
 		 * amp-ad markup.
 		 */
 		$ad_html = sprintf(
-			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s"></amp-ad>',
+			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s"></amp-ad>',
 			esc_attr( $attr['width'] ),
 			esc_attr( $attr['height'] ),
 			esc_attr( $media_query ),
 			esc_attr( $data_slot ),
 			esc_attr( $targeting_data_json ),
 			esc_attr( $attr['sizes'] ),
-			esc_attr( $layout )
+			esc_attr( $layout ),
+			esc_attr( $data_loading_strategy )
 		);
 
 		if ( $echo ) {
