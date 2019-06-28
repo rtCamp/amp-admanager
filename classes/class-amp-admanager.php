@@ -239,4 +239,104 @@ class AMP_AdManager {
 
 		}
 	}
+
+	/**
+	 * To get amp ad html code for all breakpoints.
+	 *
+	 * @param array   $attr Attributes.
+	 * @param boolean $echo Whether to echo or return html code.
+	 *
+	 * @return string
+	 */
+	public static function get_ads( $attr = [], $echo = false ) {
+
+		if ( empty( $attr ) ) {
+			return;
+		}
+
+		$ad_html     = '';
+		$breakpoints = self::get_breakpoints( $attr['sizes'] );
+
+		foreach ( $breakpoints as $device => $breakpoint ) {
+
+			if ( empty( $breakpoint['sizes'] ) ) {
+				continue;
+			}
+
+			$attr['width']  = $breakpoint['width'];
+			$attr['height'] = $breakpoint['height'];
+			$attr['sizes']  = implode( ',', $breakpoint['sizes'] );
+
+			if ( 'mobile' === $device ) {
+				$attr['max'] = 499;
+			} elseif ( 'tablet' === $device ) {
+				$attr['min'] = 500;
+				$attr['max'] = 799;
+			} else {
+				$attr['min'] = 800;
+			}
+
+			$ad_html .= self::get_amp_ad( $attr, false, true );
+		}
+
+		if ( $echo ) {
+			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+
+		return $ad_html;
+	}
+
+	/**
+	 * Sort dimensions by different devices.
+	 *
+	 * @param array $sizes All ad sizes.
+	 */
+	public static function get_breakpoints( $sizes ) {
+
+		$breakpoints['mobile']['sizes']  = [];
+		$breakpoints['tablet']['sizes']  = [];
+		$breakpoints['desktop']['sizes'] = [];
+
+		$dimensions = explode( ',', $sizes );
+
+		foreach ( $dimensions as $dimension ) {
+			$arr = explode( 'x', $dimension );
+
+			if ( $arr[0] >= 728 ) {
+				if ( ! isset( $breakpoints['desktop']['width'] ) || $arr[0] > $breakpoints['desktop']['width'] ) {
+					$breakpoints['desktop']['width'] = $arr[0];
+				}
+
+				if ( ! isset( $breakpoints['desktop']['height'] ) || $arr[1] > $breakpoints['desktop']['height'] ) {
+					$breakpoints['desktop']['height'] = $arr[1];
+				}
+
+				array_push( $breakpoints['desktop']['sizes'], $arr[0] . 'x' . $arr[1] );
+
+			} else if ( $arr[0] >= 468 ) {
+				if ( ! isset( $breakpoints['tablet']['width'] ) || $arr[0] > $breakpoints['tablet']['width'] ) {
+					$breakpoints['tablet']['width'] = $arr[0];
+				}
+
+				if ( ! isset( $breakpoints['tablet']['height'] ) || $arr[1] > $breakpoints['tablet']['height'] ) {
+					$breakpoints['tablet']['height'] = $arr[1];
+				}
+
+				array_push( $breakpoints['tablet']['sizes'], $arr[0] . 'x' . $arr[1] );
+
+			} else {
+				if ( ! isset( $$breakpoints['mobile']['width'] ) || $arr[0] > $breakpoints['mobile']['width'] ) {
+					$breakpoints['mobile']['width'] = $arr[0];
+				}
+
+				if ( ! isset( $breakpoints['mobile']['height'] ) || $arr[1] > $breakpoints['mobile']['height'] ) {
+					$breakpoints['mobile']['height'] = $arr[1];
+				}
+
+				array_push( $breakpoints['mobile']['sizes'], $arr[0] . 'x' . $arr[1] );
+			}
+		}
+
+		return $breakpoints;
+	}
 }
