@@ -277,18 +277,21 @@ class AMP_AdManager {
 
 			if ( 'mobile' === $device ) {
 				$attr['max'] = 499;
+				$attr['min'] = '';
 			} elseif ( 'tablet' === $device ) {
 				$attr['min'] = 500;
 				$attr['max'] = 799;
 			} else {
 				$attr['min'] = 800;
+				$attr['max'] = '';
 			}
 
-			$ad_html .= self::get_amp_ad( $attr, false, true );
+			$ad_html .= self::get_amp_ad( $attr, false );
 		}
 
 		if ( $echo ) {
 			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return;
 		}
 
 		return $ad_html;
@@ -321,7 +324,7 @@ class AMP_AdManager {
 
 				array_push( $breakpoints['desktop']['sizes'], $arr[0] . 'x' . $arr[1] );
 
-			} else if ( $arr[0] >= 468 ) {
+			} elseif ( $arr[0] >= 468 ) {
 				if ( ! isset( $breakpoints['tablet']['width'] ) || $arr[0] > $breakpoints['tablet']['width'] ) {
 					$breakpoints['tablet']['width'] = $arr[0];
 				}
