@@ -187,129 +187,129 @@ class AMP_AdManager {
 		return $ad_html;
 	}
 
-    /**
-     * Get amp ad html for all the sizes.
-     *
-     * @param array   $attr shortcode attributes.
-     * @param boolean $echo whether to echo or return html code.
-     *
-     * @return string
-     */
-    public static function get_ads( $attr = [], $echo = false ) {
-        $ad_html     = '';
+	/**
+	 * Get amp ad html for all the sizes.
+	 *
+	 * @param array   $attr shortcode attributes.
+	 * @param boolean $echo whether to echo or return html code.
+	 *
+	 * @return string
+	 */
+	public static function get_ads( $attr = [], $echo = false ) {
+		$ad_html     = '';
 
-        $breakpoints = [];
+		$breakpoints = [];
 
-        // filter breakpoints for mobile , tablet, and desktop.
-        if ( isset( $attr['sizes'] ) && ! empty( $attr['sizes'] ) ) {
-            $breakpoints = self::filter_breakpoints( $attr['sizes'] );
-        }
+		// filter breakpoints for mobile , tablet, and desktop.
+		if ( isset( $attr['sizes'] ) && ! empty( $attr['sizes'] ) ) {
+			$breakpoints = self::filter_breakpoints( $attr['sizes'] );
+		}
 
-        // set priority for custom sizes for mobile, tablet, and desktop.
-        $breakpoints = self::set_custom_sizes( $attr, $breakpoints );
+		// set priority for custom sizes for mobile, tablet, and desktop.
+		$breakpoints = self::set_custom_sizes( $attr, $breakpoints );
 
-        foreach ( $breakpoints as $device_type => $breakpoint ) {
+		foreach ( $breakpoints as $device_type => $breakpoint ) {
 
-            if ( empty( $breakpoint ) ) {
-                continue;
-            }
+			if ( empty( $breakpoint ) ) {
+				continue;
+			}
 
-            // get height and width to set attribute value.
-            list( $width, $height ) = explode( 'x', $breakpoint[0] );
+			// get height and width to set attribute value.
+			list( $width, $height ) = explode( 'x', $breakpoint[0] );
 
-            $sizes = implode( ',', $breakpoint );
+			$sizes = implode( ',', $breakpoint );
 
-            $attr['width']  = $width;
-            $attr['height'] = $height;
-            $attr['sizes']  = $sizes;
+			$attr['width']  = $width;
+			$attr['height'] = $height;
+			$attr['sizes']  = $sizes;
 
-            // set max and min media query as per device type.
-            switch ( $device_type ) {
-                case 'desktop':
-                    $attr['max'] = '';
-                    $attr['min'] = 800;
-                    break;
+			// set max and min media query as per device type.
+			switch ( $device_type ) {
+				case 'desktop':
+					$attr['max'] = '';
+					$attr['min'] = 800;
+					break;
 
-                case 'tablet':
-                    $attr['max'] = 500;
-                    $attr['min'] = 799;
-                    break;
-                case 'mobile':
-                    $attr['max'] = 499;
-                    $attr['min'] = '';
-                    break;
-            }
+				case 'tablet':
+					$attr['max'] = 500;
+					$attr['min'] = 799;
+					break;
+				case 'mobile':
+					$attr['max'] = 499;
+					$attr['min'] = '';
+					break;
+			}
 
-            $ad_html .= self::get_amp_ad( $attr );
-        }
+			$ad_html .= self::get_amp_ad( $attr );
+		}
 
-        if ( $echo ) {
-            echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
-        }
+		if ( $echo ) {
+			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+		}
 
-        return $ad_html;
-    }
+		return $ad_html;
+	}
 
-    /**
-     * Filter sizes for all breakpoints.
-     *
-     * @param $sizes string of coma separated size dimensions.
-     *
-     * @return array of breakpoints.
-     */
-    private static function filter_breakpoints( $sizes ) {
+	/**
+	 * Filter sizes for all breakpoints.
+	 *
+	 * @param $sizes string of coma separated size dimensions.
+	 *
+	 * @return array of breakpoints.
+	 */
+	private static function filter_breakpoints( $sizes ) {
 
-        $breakpoints['mobile']  = [];
-        $breakpoints['tablet']  = [];
-        $breakpoints['desktop'] = [];
+		$breakpoints['mobile']  = [];
+		$breakpoints['tablet']  = [];
+		$breakpoints['desktop'] = [];
 
-        $dimensions = explode( ',', $sizes );
+		$dimensions = explode( ',', $sizes );
 
-        foreach ( $dimensions as $dimension ) {
+		foreach ( $dimensions as $dimension ) {
 
-            list( $width, $height ) = explode( 'x', $dimension );
+			list( $width, $height ) = explode( 'x', $dimension );
 
-            // filter ads from width of the dimensions.
-            if ( 728 <= $width ) {
-                $breakpoints['desktop'][] = $dimension;
-            } elseif ( 468 <= $width ) {
-                $breakpoints['tablet'][] = $dimension;
-            } else {
-                $breakpoints['mobile'][] = $dimension;
-            }
-        }
+			// filter ads from width of the dimensions.
+			if ( 728 <= $width ) {
+				$breakpoints['desktop'][] = $dimension;
+			} elseif ( 468 <= $width ) {
+				$breakpoints['tablet'][] = $dimension;
+			} else {
+				$breakpoints['mobile'][] = $dimension;
+			}
+		}
 
-        return $breakpoints;
+		return $breakpoints;
 
-    }
+	}
 
-    /**
-     * Set custom sizes for different device type.
-     *
-     * @param $attr        array of attributes containing custom size.
-     * @param $breakpoints array of default dimensions.
-     *
-     * @return array of new breakpoint custom sizes
-     */
-    private static function set_custom_sizes( $attr, $breakpoints ) {
+	/**
+	 * Set custom sizes for different device type.
+	 *
+	 * @param $attr        array of attributes containing custom size.
+	 * @param $breakpoints array of default dimensions.
+	 *
+	 * @return array of new breakpoint custom sizes
+	 */
+	private static function set_custom_sizes( $attr, $breakpoints ) {
 
-	    // set custom desktop size if passed.
-        if ( isset( $attr['desktop-sizes'] ) && ! empty( $attr['desktop-sizes'] ) ) {
-            $breakpoints['desktop'] = [ $attr['desktop-sizes'] ];
-        }
+		// set custom desktop size if passed.
+		if ( isset( $attr['desktop-sizes'] ) && ! empty( $attr['desktop-sizes'] ) ) {
+			$breakpoints['desktop'] = [ $attr['desktop-sizes'] ];
+		}
 
-        // set custom tablet size if passed.
-        if ( isset( $attr['tablet-sizes'] ) && ! empty( $attr['tablet-sizes'] ) ) {
-            $breakpoints['tablet'] = [ $attr['tablet-sizes'] ];
-        }
+		// set custom tablet size if passed.
+		if ( isset( $attr['tablet-sizes'] ) && ! empty( $attr['tablet-sizes'] ) ) {
+			$breakpoints['tablet'] = [ $attr['tablet-sizes'] ];
+		}
 
-        // set custom mobile size if passed.
-        if ( isset( $attr['mobile-sizes'] ) && ! empty( $attr['mobile-sizes'] ) ) {
-            $breakpoints['mobile'] = [ $attr['mobile-sizes'] ];
-        }
+		// set custom mobile size if passed.
+		if ( isset( $attr['mobile-sizes'] ) && ! empty( $attr['mobile-sizes'] ) ) {
+			$breakpoints['mobile'] = [ $attr['mobile-sizes'] ];
+		}
 
-        return $breakpoints;
-    }
+		return $breakpoints;
+	}
 
 	/**
 	 * To get ad slot media query in proper format.
