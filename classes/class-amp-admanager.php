@@ -322,17 +322,33 @@ class AMP_AdManager {
 
 		// set custom desktop size if passed.
 		if ( isset( $attr['desktop-sizes'] ) && ! empty( $attr['desktop-sizes'] ) ) {
-			$breakpoints['desktop'] = explode( ',', $attr['desktop-sizes'] );
+			// set blank array to overwrite sizes attribute.
+			$breakpoints['desktop'] = [];
+			foreach ( explode( ',', $attr['desktop-sizes'] ) as $size ) {
+				list( $width, $height ) = explode( 'x', $size );
+
+				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
+			}
 		}
 
 		// set custom tablet size if passed.
 		if ( isset( $attr['tablet-sizes'] ) && ! empty( $attr['tablet-sizes'] ) ) {
-			$breakpoints['tablet'] = explode( ',', $attr['tablet-sizes'] );
+			$breakpoints['tablet'] = [];
+			foreach ( explode( ',', $attr['tablet-sizes'] ) as $size ) {
+				list( $width, $height ) = explode( 'x', $size );
+
+				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
+			}
 		}
 
 		// set custom mobile size if passed.
 		if ( isset( $attr['mobile-sizes'] ) && ! empty( $attr['mobile-sizes'] ) ) {
-			$breakpoints['mobile'] = explode( ',', $attr['mobile-sizes'] );
+			$breakpoints['mobile'] = [];
+			foreach ( explode( ',', $attr['mobile-sizes'] ) as $size ) {
+				list( $width, $height ) = explode( 'x', $size );
+
+				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
+			}
 		}
 
 		return $breakpoints;
