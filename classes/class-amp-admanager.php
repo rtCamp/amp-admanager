@@ -124,7 +124,7 @@ class AMP_AdManager {
 	/**
 	 * Get amp ad html code.
 	 *
-	 * @param array   $attr shortcode attributes.
+	 * @param array $attr shortcode attributes.
 	 *
 	 * @return string
 	 */
@@ -197,7 +197,6 @@ class AMP_AdManager {
 	 */
 	public static function get_ads( $attr = [], $echo = false ) {
 		$ad_html     = '';
-
 		$breakpoints = [];
 
 		// filter breakpoints for mobile , tablet, and desktop.
@@ -244,16 +243,16 @@ class AMP_AdManager {
 		}
 
 		if ( $echo ) {
-			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		return $ad_html;
 	}
 
 	/**
-	 * Filter sizes for all breakpoints.
+	 * Filter sizes for all 3 device type breakpoints.
 	 *
-	 * @param $sizes string of coma separated size dimensions.
+	 * @param string $sizes coma separated size dimensions.
 	 *
 	 * @return array of breakpoints.
 	 */
@@ -286,8 +285,8 @@ class AMP_AdManager {
 	/**
 	 * Set custom sizes for different device type.
 	 *
-	 * @param $attr        array of attributes containing custom size.
-	 * @param $breakpoints array of default dimensions.
+	 * @param array $attr        attributes containing custom size.
+	 * @param array $breakpoints default dimensions.
 	 *
 	 * @return array of new breakpoint custom sizes
 	 */
@@ -295,17 +294,17 @@ class AMP_AdManager {
 
 		// set custom desktop size if passed.
 		if ( isset( $attr['desktop-sizes'] ) && ! empty( $attr['desktop-sizes'] ) ) {
-			$breakpoints['desktop'] = [ $attr['desktop-sizes'] ];
+			$breakpoints['desktop'] = explode( ',', $attr['desktop-sizes'] );
 		}
 
 		// set custom tablet size if passed.
 		if ( isset( $attr['tablet-sizes'] ) && ! empty( $attr['tablet-sizes'] ) ) {
-			$breakpoints['tablet'] = [ $attr['tablet-sizes'] ];
+			$breakpoints['tablet'] = explode( ',', $attr['tablet-sizes'] );
 		}
 
 		// set custom mobile size if passed.
 		if ( isset( $attr['mobile-sizes'] ) && ! empty( $attr['mobile-sizes'] ) ) {
-			$breakpoints['mobile'] = [ $attr['mobile-sizes'] ];
+			$breakpoints['mobile'] = explode( ',', $attr['mobile-sizes'] );
 		}
 
 		return $breakpoints;
