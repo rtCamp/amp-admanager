@@ -209,14 +209,15 @@ class AMP_AdManager {
 
 		foreach ( $breakpoints as $device_type => $breakpoint ) {
 
-			if ( empty( $breakpoint ) ) {
+			if ( ! isset( $breakpoint['sizes'] ) || empty( $breakpoint['sizes'] ) ) {
 				continue;
 			}
 
 			// get height and width to set attribute value.
-			list( $width, $height ) = explode( 'x', $breakpoint[0] );
+			$width  = $breakpoint['width'];
+			$height = $breakpoint['height'];
 
-			$sizes = implode( ',', $breakpoint );
+			$sizes = implode( ',', $breakpoint['sizes'] );
 
 			$attr['width']  = $width;
 			$attr['height'] = $height;
@@ -269,17 +270,44 @@ class AMP_AdManager {
 			list( $width, $height ) = explode( 'x', $dimension );
 
 			// filter ads from width of the dimensions.
-			if ( 728 <= $width ) {
-				$breakpoints['desktop'][] = $dimension;
+			if ( 728 <= (int) $width ) {
+				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
 			} elseif ( 468 <= $width ) {
-				$breakpoints['tablet'][] = $dimension;
+				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
 			} else {
-				$breakpoints['mobile'][] = $dimension;
+				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
 			}
 		}
 
 		return $breakpoints;
 
+	}
+
+	/**
+	 * Validate and set maximum width and height needed for ad container.
+	 *
+	 * @param string $device_type desktop, mobile, or tablet.
+	 * @param array  $breakpoints contains breakpoints.
+	 * @param string $width       width.
+	 * @param string $height      height.
+	 *
+	 * @return array of updated width, height and sizes.
+	 */
+	private static function set_max_height_and_width( $device_type, $breakpoints, $width, $height ) {
+
+		if ( ! isset( $breakpoints[ $device_type ]['width'] ) ||
+			(int) $width > (int) $breakpoints[ $device_type ]['width'] ) {
+			$breakpoints[ $device_type ]['width'] = $width;
+		}
+
+		if ( ! isset( $breakpoints[ $device_type ]['height'] ) ||
+			(int) $height > (int) $breakpoints[ $device_type ]['height'] ) {
+			$breakpoints[ $device_type ]['height'] = $height;
+		}
+
+		$breakpoints[ $device_type ]['sizes'][] = sprintf( '%sx%s', $width, $height );
+
+		return $breakpoints;
 	}
 
 	/**
