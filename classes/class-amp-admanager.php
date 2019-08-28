@@ -38,7 +38,7 @@ class AMP_AdManager {
 
 	/**
 	 * Function used to create ads data.
-	 * 
+	 *
 	 * @param	array $attr Array of attributes supplied in ampad shortcode.
 	 *
 	 * @return	array Dfp setTargeting ad data.
@@ -122,17 +122,16 @@ class AMP_AdManager {
 	}
 
 	/**
-	 * To get amp ad html code for all breakpoints.
+	 * Get amp ad html code.
 	 *
-	 * @param array   $attr shortcode attributes.
-	 * @param boolean $echo whether to echo or return html code.
+	 * @param array $attr shortcode attributes.
 	 *
 	 * @return string
 	 */
-	public static function get_amp_ad( $attr = [], $echo = false ) {
+	private static function get_amp_ad( $attr ) {
 
 		if ( empty( $attr ) ) {
-			return;
+			return '';
 		}
 
 		/**
@@ -185,11 +184,174 @@ class AMP_AdManager {
 			esc_attr( $data_loading_strategy )
 		);
 
+		return $ad_html;
+	}
+
+	/**
+	 * Get amp ad html for all the sizes.
+	 *
+	 * @param array   $attr shortcode attributes.
+	 * @param boolean $echo whether to echo or return html code.
+	 *
+	 * @return string
+	 */
+	public static function get_ads( $attr = [], $echo = false ) {
+		$ad_html     = '';
+		$breakpoints = [];
+
+		// filter breakpoints for mobile , tablet, and desktop.
+		if ( isset( $attr['sizes'] ) && ! empty( $attr['sizes'] ) ) {
+			$breakpoints = self::filter_breakpoints( $attr['sizes'] );
+		}
+
+		// set priority for custom sizes for mobile, tablet, and desktop.
+		$breakpoints = self::set_custom_sizes( $attr, $breakpoints );
+
+		foreach ( $breakpoints as $device_type => $breakpoint ) {
+
+			if ( ! isset( $breakpoint['sizes'] ) || empty( $breakpoint['sizes'] ) ) {
+				continue;
+			}
+
+			// get height and width to set attribute value.
+			$width  = $breakpoint['width'];
+			$height = $breakpoint['height'];
+
+			$sizes = implode( ',', $breakpoint['sizes'] );
+
+			$attr['width']  = $width;
+			$attr['height'] = $height;
+			$attr['sizes']  = $sizes;
+
+			// set max and min media query as per device type.
+			switch ( $device_type ) {
+				case 'desktop':
+					$attr['max'] = '';
+					$attr['min'] = 800;
+					break;
+
+				case 'tablet':
+					$attr['max'] = 500;
+					$attr['min'] = 799;
+					break;
+				case 'mobile':
+					$attr['max'] = 499;
+					$attr['min'] = '';
+					break;
+			}
+
+			$ad_html .= self::get_amp_ad( $attr );
+		}
+
 		if ( $echo ) {
-			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+			echo $ad_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		return $ad_html;
+	}
+
+	/**
+	 * Filter sizes for all 3 device type breakpoints.
+	 *
+	 * @param string $sizes coma separated size dimensions.
+	 *
+	 * @return array of breakpoints.
+	 */
+	private static function filter_breakpoints( $sizes ) {
+
+		$breakpoints['mobile']  = [];
+		$breakpoints['tablet']  = [];
+		$breakpoints['desktop'] = [];
+
+		$dimensions = explode( ',', $sizes );
+
+		foreach ( $dimensions as $dimension ) {
+
+			list( $width, $height ) = explode( 'x', $dimension );
+
+			// filter ads from width of the dimensions.
+			if ( 728 <= (int) $width ) {
+				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
+			} elseif ( 468 <= $width ) {
+				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
+			} else {
+				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
+			}
+		}
+
+		return $breakpoints;
+
+	}
+
+	/**
+	 * Validate and set maximum width and height needed for ad container.
+	 *
+	 * @param string $device_type desktop, mobile, or tablet.
+	 * @param array  $breakpoints contains breakpoints.
+	 * @param string $width       width.
+	 * @param string $height      height.
+	 *
+	 * @return array of updated width, height and sizes.
+	 */
+	private static function set_max_height_and_width( $device_type, $breakpoints, $width, $height ) {
+
+		if ( ! isset( $breakpoints[ $device_type ]['width'] ) ||
+			(int) $width > (int) $breakpoints[ $device_type ]['width'] ) {
+			$breakpoints[ $device_type ]['width'] = $width;
+		}
+
+		if ( ! isset( $breakpoints[ $device_type ]['height'] ) ||
+			(int) $height > (int) $breakpoints[ $device_type ]['height'] ) {
+			$breakpoints[ $device_type ]['height'] = $height;
+		}
+
+		$breakpoints[ $device_type ]['sizes'][] = sprintf( '%sx%s', $width, $height );
+
+		return $breakpoints;
+	}
+
+	/**
+	 * Set custom sizes for different device type.
+	 *
+	 * @param array $attr        attributes containing custom size.
+	 * @param array $breakpoints default dimensions.
+	 *
+	 * @return array of new breakpoint custom sizes
+	 */
+	private static function set_custom_sizes( $attr, $breakpoints ) {
+
+		// set custom desktop size if passed.
+		if ( isset( $attr['desktop-sizes'] ) && ! empty( $attr['desktop-sizes'] ) ) {
+			// set blank array to overwrite sizes attribute.
+			$breakpoints['desktop'] = [];
+			foreach ( explode( ',', $attr['desktop-sizes'] ) as $size ) {
+				list( $width, $height ) = explode( 'x', $size );
+
+				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
+			}
+		}
+
+		// set custom tablet size if passed.
+		if ( isset( $attr['tablet-sizes'] ) && ! empty( $attr['tablet-sizes'] ) ) {
+			$breakpoints['tablet'] = [];
+			foreach ( explode( ',', $attr['tablet-sizes'] ) as $size ) {
+				list( $width, $height ) = explode( 'x', $size );
+
+				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
+			}
+		}
+
+		// set custom mobile size if passed.
+		if ( isset( $attr['mobile-sizes'] ) && ! empty( $attr['mobile-sizes'] ) ) {
+			$breakpoints['mobile'] = [];
+			foreach ( explode( ',', $attr['mobile-sizes'] ) as $size ) {
+				list( $width, $height ) = explode( 'x', $size );
+
+				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
+			}
+		}
+
+		return $breakpoints;
 	}
 
 	/**
@@ -227,7 +389,7 @@ class AMP_AdManager {
 	 */
 	public function load_amp_resources() {
 
-		// Check if current page is amp page. 
+		// Check if current page is amp page.
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			return;
 		}
