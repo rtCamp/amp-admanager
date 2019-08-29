@@ -20,48 +20,66 @@ Works without AMP plugin as well for Non-AMP pages.
 2. Select `Load AMP Resources for Non-AMP site` to load `amp-runtime` and `amp-boilerplate` css.
 
 ## Usage
+Pass different ad sizes as attributes for mobile, tablet, and desktop ads. The plugin uses the width of the specified size to determine which device ad should be displayed. 
+
+1. Width equal to or more than `728` will be considered as desktop sizes eg. `980x250,970x90`.
+2. Width between `468` and `727` will be considered as a tablet sizes eg.`468x60`.
+3. Width less than `468` will be considered as mobile sizes eg. `320x50,300x100`.
+
+In case of unusual sizes for desktop, tablet and mobile specific device size attribute like `mobile-sizes` for mobile, `tablet-sizes` for tablet, and `desktop-sizes` for desktop. These sizes will override `sizes` attribute.
 
 #### As Shortcode
 
 ```
-[ampad width="<slot-width>" height="<slot-height>" 
-ad-unit="<ad-unit-name>" min="" max="499" 
-sizes="320x50,300x100,300x50" 
+[ampad ad-unit="<ad-unit-name>"
+sizes="320x50,300x100,300x50,468x60,980x250,970x90"
 custom-targeting="key1:value1, key2:value2"]
 ```
 
 #### In Template
 
+##### With `sizes` attribute example
+
 ```php
 $attr = [
-	'width'     => '<slot-width>',
-	'height'    => '<slot-height>',
 	'ad-unit'   => '<ad-unit-name>',
-	'min'       => '',
-	'max'       => '499',
-	'sizes'     => '320x50,300x100',
+	'sizes'     => '320x50,300x100,300x50,468x60,980x250,970x90',
 	'layout'    => 'responsive',
 	'custom-targeting' => 'key1:value1, key2:value2'
 ];
 
-AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
+AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
+```
+
+##### With custom or unusual sizes
+
+```php
+$attr = [
+	'ad-unit'	=> '<ad-unit-name>',
+	'mobile-sizes'	=> '320x50,300x100',
+	'tablet-sizes'	=> '300x50,468x60',
+	'dekstop-sizes'	=> '980x250,970x90',
+	'layout'	=> 'responsive',
+	'custom-targeting'	=> 'key1:value1, key2:value2'
+];
+
+AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 ```
 
 ##### Parameters:
 
 1. `$attr` 
-(Array) These are passed directly to the `get_amp_ad` via template tag shown above or via shortcode.
+(Array) These are passed directly to the `get_ads` via template tag shown above or via shortcode.
 
 	Default value: array
 	```
 	[
-		'width'            => '300',
-		'height'           => '250',
 		'network-id'       => '',
 		'ad-unit'          => '',
-		'min'              => '',
-		'max'              => '',
-		'sizes'            => '300x250,300x100',
+		'mobile-sizes'	=> '320x50,300x100', // consider for mobile
+		'tablet-sizes'	=> '300x50,468x60',  // consider for tablet
+		'dekstop-sizes'	=> '980x250,970x90', // consider for desktop
+		'sizes'            => '320x50,300x50,468x60,980x250,970x90',
 		'layout'           => 'fixed',
 		'custom-targeting' => ''
 	]
@@ -93,6 +111,10 @@ AMP_AdManager\AMP_AdManager::get_amp_ad( $attr, true );
 * Request review for your changes and get approvals.
 
 ## Change Log
+
+### v0.6 (28-08-2019)
+* Add single function to get output of mobile, tablet, desktop ads.
+* Add additional attribute to specify custom or unusual ad sizes.
 
 ### v0.5 (17-05-2019)
 * PHPCS fixes.
