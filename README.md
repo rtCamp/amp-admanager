@@ -26,7 +26,11 @@ Pass different ad sizes as attributes for mobile, tablet, and desktop ads. The p
 2. Width between `468` and `727` will be considered as a tablet sizes eg.`468x60`.
 3. Width less than `468` will be considered as mobile sizes eg. `320x50,300x100`.
 
-In case of unusual sizes for desktop, tablet and mobile specific device size attribute like `mobile-sizes` for mobile, `tablet-sizes` for tablet, and `desktop-sizes` for desktop. These sizes will override `sizes` attribute.
+In case of unusual sizes for desktop, tablet and mobile specific device size attribute, like
+
+* `mobile-sizes` for mobile.
+* `tablet-sizes` for tablet.
+* `desktop-sizes` for desktop.
 
 #### As Shortcode
 
