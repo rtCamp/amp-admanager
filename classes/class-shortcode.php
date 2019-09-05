@@ -31,13 +31,26 @@ class Shortcode {
 	 */
 	public function render_amp_ad( $attr = [], $content = '' ) {
 
+		// defaut sizes.
+		$sizes = '300x250,300x100';
+
+		if ( isset( $attr['sizes'] ) ) {
+			// Pass user defined sizes if defined.
+			$sizes = $attr['sizes'];
+		} elseif ( isset( $attr['mobile-sizes'] ) ||
+			isset( $attr['tablet-sizes'] ) ||
+			isset( $attr['desktop-sizes'] ) ) {
+			// Pass blank if any of custom sizes defined and sizes not defined.
+			$sizes = '';
+		}
+
 		$default_attr = [
 			'network-id'       => '',
 			'ad-unit'          => '',
 			'desktop-sizes'    => '',
 			'tablet-sizes'     => '',
 			'mobile-sizes'     => '',
-			'sizes'            => '300x250,300x100',
+			'sizes'            => $sizes,
 			'layout'           => 'fixed',
 			'custom-targeting' => '',
 		];
