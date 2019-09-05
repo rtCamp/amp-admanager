@@ -40,18 +40,28 @@ sizes="320x50,300x100,300x50,468x60,980x250,970x90"
 custom-targeting="key1:value1, key2:value2"]
 ```
 
-##### Custom sizes in shortcode
+##### Custom sizes attributes example
 
 ```
 [ampad ad-unit="<ad-unit-name>"
-sizes=""
 desktop-sizes="320x100,300x100"
 tablet-sizes="468x60,300x100"
 mobile-sizes="300x100,320x50"
 custom-targeting="key1:value1, key2:value2"]
 ```
 
-Note: Pass blank string to sizes attributes if you are passing custom sizes attributes.
+##### Custom sizes example sizes with sizes attribute
+
+```
+[ampad ad-unit="<ad-unit-name>"
+sizes="300x100,320x50,910x150"
+desktop-sizes="320x100,300x100"
+custom-targeting="key1:value1, key2:value2"]
+```
+
+`sizes` attribute and `custom sizes` attrubutes can be used simutanously where `custom sizes` attributes overtake `sizes` attribute.
+
+In above example `300x100` and `320x50` are for mobile and `910x150` is for desktop, but since we defined `desktop-sizes`, it will override previous desktop size of `910x150` and new desktop sizes will be `320x100` and `300x100`.
 
 #### In Template
 
