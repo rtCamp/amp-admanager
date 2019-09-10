@@ -7,7 +7,7 @@ AMP ads for all WordPress sites (AMP and Non-AMP).
 This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ads using `min` and `max` attributes.
 Works without AMP plugin as well for Non-AMP pages. 
 
-**Contributors:** [rtCamp](https://github.com/rtCamp/), [Vishal Dodiya](https://github.com/vishaldodiya), [Pradeep Sonawane](https://github.com/pradeep910)
+**Contributors:** [rtCamp](https://github.com/rtCamp/), [Vishal Dodiya](https://github.com/vishaldodiya), [Pradeep Sonawane](https://github.com/pradeep910), [Sagar Nasit](https://github.com/sagarnasit)
 
 **Tags:** [amp](https://wordpress.org/plugins/tags/amp), [mobile](https://wordpress.org/plugins/tags/mobile)
 **Requires at least:** 4.9  
@@ -40,6 +40,29 @@ sizes="320x50,300x100,300x50,468x60,980x250,970x90"
 custom-targeting="key1:value1, key2:value2"]
 ```
 
+##### Custom sizes attributes example
+
+```
+[ampad ad-unit="<ad-unit-name>"
+desktop-sizes="320x100,300x100"
+tablet-sizes="468x60,300x100"
+mobile-sizes="300x100,320x50"
+custom-targeting="key1:value1, key2:value2"]
+```
+
+##### Custom sizes example sizes with sizes attribute
+
+```
+[ampad ad-unit="<ad-unit-name>"
+sizes="300x100,320x50,910x150"
+desktop-sizes="320x100,300x100"
+custom-targeting="key1:value1, key2:value2"]
+```
+
+`sizes` attribute and `custom sizes` attrubutes can be used simutanously where `custom sizes` attributes overtake `sizes` attribute.
+
+In above example `300x100` and `320x50` are for mobile and `910x150` is for desktop as per our caculation on width. But since we defined `desktop-sizes`, it will override previous desktop size of `910x150` and new desktop sizes will be `320x100` and `300x100`. mobile sizes will remain intact.
+
 #### In Template
 
 ##### With `sizes` attribute example
@@ -59,11 +82,11 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 
 ```php
 $attr = [
-	'ad-unit'	=> '<ad-unit-name>',
-	'mobile-sizes'	=> '320x50,300x100',
-	'tablet-sizes'	=> '300x50,468x60',
-	'dekstop-sizes'	=> '980x250,970x90',
-	'layout'	=> 'responsive',
+	'ad-unit'			=> '<ad-unit-name>',
+	'mobile-sizes'		=> '320x50,300x100',
+	'tablet-sizes'		=> '300x50,468x60',
+	'dekstop-sizes'		=> '980x250,970x90',
+	'layout'			=> 'responsive',
 	'custom-targeting'	=> 'key1:value1, key2:value2'
 ];
 
@@ -80,9 +103,9 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 	[
 		'network-id'       => '',
 		'ad-unit'          => '',
-		'mobile-sizes'	=> '320x50,300x100', // consider for mobile
-		'tablet-sizes'	=> '300x50,468x60',  // consider for tablet
-		'dekstop-sizes'	=> '980x250,970x90', // consider for desktop
+		'mobile-sizes'	   => '320x50,300x100', // consider for mobile
+		'tablet-sizes'	   => '300x50,468x60',  // consider for tablet
+		'dekstop-sizes'	   => '980x250,970x90', // consider for desktop
 		'sizes'            => '320x50,300x50,468x60,980x250,970x90',
 		'layout'           => 'fixed',
 		'custom-targeting' => ''
@@ -115,6 +138,10 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 * Request review for your changes and get approvals.
 
 ## Change Log
+
+### v0.7 (03-09-2019)
+
+* Add custom sizes attributes for shortcode.
 
 ### v0.6 (28-08-2019)
 * Add single function to get output of mobile, tablet, desktop ads.
