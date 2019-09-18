@@ -170,10 +170,17 @@ class AMP_AdManager {
 		$data_loading_strategy = empty( $attr['data-loading-strategy'] ) ? 'prefer-viewability-over-views' : $attr['data-loading-strategy'];
 
 		/**
+		 * Add data-enable-refresh attribute.
+		 * `false` will be default value or attribute value is less than 30.
+		 * Supported values: Integer value 30 or above.
+		 */
+		$ad_arefresh_rate = ( isset( $attr['ad-refresh'] ) && (int) $attr['ad-refresh'] >= 30 ) ? (int) $attr['ad-refresh'] : false;
+
+		/**
 		 * amp-ad markup.
 		 */
 		$ad_html = sprintf(
-			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s"></amp-ad>',
+			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
 			esc_attr( $attr['width'] ),
 			esc_attr( $attr['height'] ),
 			esc_attr( $media_query ),
@@ -181,7 +188,8 @@ class AMP_AdManager {
 			esc_attr( $targeting_data_json ),
 			esc_attr( $attr['sizes'] ),
 			esc_attr( $layout ),
-			esc_attr( $data_loading_strategy )
+			esc_attr( $data_loading_strategy ),
+			esc_attr( $ad_arefresh_rate )
 		);
 
 		return $ad_html;
