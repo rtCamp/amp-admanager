@@ -53,6 +53,7 @@ class Shortcode {
 			'sizes'            => $sizes,
 			'layout'           => 'fixed',
 			'custom-targeting' => '',
+			'ad-refresh'       => false,
 		];
 
 		$attr = shortcode_atts( $default_attr, $attr );
