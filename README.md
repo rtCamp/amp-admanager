@@ -145,6 +145,11 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 
 ## Change Log
 
+### v0.8 (20-09-2019)
+
+* Add ad refresh support.
+* Add Single Request Architecture (SRA) support.
+
 ### v0.7 (03-09-2019)
 
 * Add custom sizes attributes for shortcode.
