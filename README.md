@@ -4,7 +4,7 @@
 
 # AMP AdManager 0.5
 AMP ads for all WordPress sites (AMP and Non-AMP). 
-This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ads using `min` and `max` attributes.
+This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ad with Single Request Architecture (SRA).
 Works without AMP plugin as well for Non-AMP pages. 
 
 **Contributors:** [rtCamp](https://github.com/rtCamp/), [Vishal Dodiya](https://github.com/vishaldodiya), [Pradeep Sonawane](https://github.com/pradeep910), [Sagar Nasit](https://github.com/sagarnasit)
@@ -32,12 +32,13 @@ In case of unusual sizes for desktop, tablet and mobile specific device size att
 * `tablet-sizes` for tablet.
 * `desktop-sizes` for desktop.
 
+
 #### As Shortcode
 
 ```
 [ampad ad-unit="<ad-unit-name>"
 sizes="320x50,300x100,300x50,468x60,980x250,970x90"
-custom-targeting="key1:value1, key2:value2"]
+custom-targeting="key1:value1, key2:value2" ad-refresh="30"]
 ```
 
 ##### Custom sizes attributes example
@@ -108,12 +109,17 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 		'dekstop-sizes'	   => '980x250,970x90', // consider for desktop
 		'sizes'            => '320x50,300x50,468x60,980x250,970x90',
 		'layout'           => 'fixed',
-		'custom-targeting' => ''
+		'custom-targeting' => '',
+		'ad-refresh'       => 30, // refresh ad every 30 seconf.
 	]
 	```
 
 2. `$echo` 
 (Boolean) Outputs amp-ad tag if true, returns amp-ad html as value otherwise.
+
+### Notice:
+
+- `Single Request Architecture(SRA)` is enabled by default and `Ad refresh` is disabled in default ad attributes. But SRA will not work if ad refresh is enabled.
 
 ### Available targeting variables
 
