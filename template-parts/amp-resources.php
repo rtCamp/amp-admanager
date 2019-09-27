@@ -21,4 +21,3 @@
 </noscript>
 <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
 <script type="text/javascript" src="https://cdn.ampproject.org/v0.js" async></script>
-<meta name="amp-ad-doubleclick-sra"/>
