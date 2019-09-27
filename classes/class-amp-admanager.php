@@ -246,8 +246,8 @@ class AMP_AdManager {
 					break;
 
 				case 'tablet':
-					$attr['max'] = 500;
-					$attr['min'] = 799;
+					$attr['max'] = 799;
+					$attr['min'] = 500;
 					break;
 				case 'mobile':
 					$attr['max'] = 499;
@@ -287,10 +287,11 @@ class AMP_AdManager {
 			// filter ads from width of the dimensions.
 			if ( 728 <= (int) $width ) {
 				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
-			} elseif ( 300 <= $width && 600 >= $width ) {
-				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
-			} else {
+			} elseif ( 300 <= (int) $width && 600 >= (int) $width ) {
+				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );	
+				if ( 350 >= (int) $width ) {
 				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
+				}
 			}
 		}
 
