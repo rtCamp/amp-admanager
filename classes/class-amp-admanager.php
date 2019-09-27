@@ -287,7 +287,7 @@ class AMP_AdManager {
 			// filter ads from width of the dimensions.
 			if ( 728 <= (int) $width ) {
 				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
-			} elseif ( 300 <= $width ) {
+			} elseif ( 300 <= $width && 600 >= $width ) {
 				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
 			} else {
 				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
