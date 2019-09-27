@@ -2,7 +2,7 @@
 <a href="https://rtcamp.com/?ref=amp-admanager-repo" target="_blank"><img width="200"src="https://rtcamp.com/wp-content/uploads/2018/04/rtcamp-logo-1.svg"></a>
 </p>
 
-# AMP AdManager 0.5
+# AMP AdManager 0.9
 AMP ads for all WordPress sites (AMP and Non-AMP). 
 This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ad with Single Request Architecture (SRA).
 Works without AMP plugin as well for Non-AMP pages. 
@@ -145,13 +145,14 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 
 ## Change Log
 
-### v0.8 (20-09-2019)
+### v0.9 (27-09-2019)
+* Add missing single page targeting variables.
 
+### v0.8 (20-09-2019)
 * Add ad refresh support.
 * Add Single Request Architecture (SRA) support.
 
 ### v0.7 (03-09-2019)
-
 * Add custom sizes attributes for shortcode.
 
 ### v0.6 (28-08-2019)
