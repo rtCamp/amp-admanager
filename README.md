@@ -2,9 +2,9 @@
 <a href="https://rtcamp.com/?ref=amp-admanager-repo" target="_blank"><img width="200"src="https://rtcamp.com/wp-content/uploads/2018/04/rtcamp-logo-1.svg"></a>
 </p>
 
-# AMP AdManager 0.8
+# AMP AdManager 0.9
 AMP ads for all WordPress sites (AMP and Non-AMP). 
-This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ads using `min` and `max` attributes.
+This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ad with Single Request Architecture (SRA).
 Works without AMP plugin as well for Non-AMP pages. 
 
 **Contributors:** [rtCamp](https://github.com/rtCamp/), [Vishal Dodiya](https://github.com/vishaldodiya), [Pradeep Sonawane](https://github.com/pradeep910), [Sagar Nasit](https://github.com/sagarnasit)
@@ -32,12 +32,13 @@ In case of unusual sizes for desktop, tablet and mobile specific device size att
 * `tablet-sizes` for tablet.
 * `desktop-sizes` for desktop.
 
+
 #### As Shortcode
 
 ```
 [ampad ad-unit="<ad-unit-name>"
 sizes="320x50,300x100,300x50,468x60,980x250,970x90"
-custom-targeting="key1:value1, key2:value2"]
+custom-targeting="key1:value1, key2:value2" ad-refresh="30"]
 ```
 
 ##### Custom sizes attributes example
@@ -108,12 +109,17 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 		'dekstop-sizes'	   => '980x250,970x90', // consider for desktop
 		'sizes'            => '320x50,300x50,468x60,980x250,970x90',
 		'layout'           => 'fixed',
-		'custom-targeting' => ''
+		'custom-targeting' => '',
+		'ad-refresh'       => 30, // refresh ad every 30 seconf.
 	]
 	```
 
 2. `$echo` 
 (Boolean) Outputs amp-ad tag if true, returns amp-ad html as value otherwise.
+
+### Notice:
+
+- `Single Request Architecture(SRA)` is enabled by default and `Ad refresh` is disabled in default ad attributes. But SRA will not work if ad refresh is enabled.
 
 ### Available targeting variables
 
@@ -139,8 +145,12 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 
 ## Change Log
 
-### v0.8 (27-09-2019)
-* Add missingle page targeting variables.
+### v0.9 (27-09-2019)
+* Add missing single page targeting variables.
+
+### v0.8 (20-09-2019)
+* Add ad refresh support.
+* Add Single Request Architecture (SRA) support.
 
 ### v0.7 (03-09-2019)
 * Add custom sizes attributes for shortcode.
