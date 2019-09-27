@@ -404,6 +404,11 @@ class AMP_AdManager {
 	 */
 	public function load_amp_resources() {
 
+		// Add DFP single request mode for ad rendering ref - https://github.com/ampproject/amphtml/blob/master/extensions/amp-ad-network-doubleclick-impl/sra.md for more info.
+		?>
+		<meta name="amp-ad-doubleclick-sra" />
+		<?php
+
 		// Check if current page is amp page.
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			return;
