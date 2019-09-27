@@ -147,6 +147,7 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 
 ### v0.9 (27-09-2019)
 * Add missing single page targeting variables.
+* Fix SRA tag loading on both AMP and Non-AMP pages.
 
 ### v0.8 (20-09-2019)
 * Add ad refresh support.
