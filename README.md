@@ -62,7 +62,7 @@ custom-targeting="key1:value1, key2:value2"]
 
 `sizes` attribute and `custom sizes` attrubutes can be used simutanously where `custom sizes` attributes overtake `sizes` attribute.
 
-In above example `300x100` and `320x50` are for tablet and `910x150` is for desktop as per caculation on width. But since we defined `desktop-sizes` as well, it will override previous desktop size of `910x150` and new desktop sizes will be `320x100` and `300x100`. Other sizes for mobile and desktop will remain intact as we have not specified custom sizes for mobile and tablet.
+In above example `300x100` and `320x50` are for tablet and `910x150` is for desktop as per caculation on width. But since we defined `desktop-sizes` as well, it will override previous desktop size of `910x150` and new desktop sizes will be `320x100` and `300x100`. Other sizes for mobile and tablet will remain intact as we have not specified custom sizes for mobile and tablet.
 
 #### In Template
 
