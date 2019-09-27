@@ -2,7 +2,7 @@
 <a href="https://rtcamp.com/?ref=amp-admanager-repo" target="_blank"><img width="200"src="https://rtcamp.com/wp-content/uploads/2018/04/rtcamp-logo-1.svg"></a>
 </p>
 
-# AMP AdManager 0.9
+# AMP AdManager 1.0.0
 AMP ads for all WordPress sites (AMP and Non-AMP). 
 This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ad with Single Request Architecture (SRA).
 Works without AMP plugin as well for Non-AMP pages. 
@@ -23,8 +23,8 @@ Works without AMP plugin as well for Non-AMP pages.
 Pass different ad sizes as attributes for mobile, tablet, and desktop ads. The plugin uses the width of the specified size to determine which device ad should be displayed. 
 
 1. Width equal to or more than `728` will be considered as desktop sizes eg. `980x250,970x90`.
-2. Width between `468` and `727` will be considered as a tablet sizes eg.`468x60`.
-3. Width less than `468` will be considered as mobile sizes eg. `320x50,300x100`.
+2. Width between `300` and `727` will be considered as a tablet sizes eg.`320x50,300x100,468x60`.
+3. Width less than `300` will be considered as mobile sizes eg. `250x50,150x150`.
 
 In case of unusual sizes for desktop, tablet and mobile specific device size attribute, like
 
@@ -62,7 +62,7 @@ custom-targeting="key1:value1, key2:value2"]
 
 `sizes` attribute and `custom sizes` attrubutes can be used simutanously where `custom sizes` attributes overtake `sizes` attribute.
 
-In above example `300x100` and `320x50` are for mobile and `910x150` is for desktop as per our caculation on width. But since we defined `desktop-sizes`, it will override previous desktop size of `910x150` and new desktop sizes will be `320x100` and `300x100`. mobile sizes will remain intact.
+In above example `300x100` and `320x50` are for tablet and `910x150` is for desktop as per caculation on width. But since we defined `desktop-sizes` as well, it will override previous desktop size of `910x150` and new desktop sizes will be `320x100` and `300x100`. Other sizes for mobile and desktop will remain intact as we have not specified custom sizes for mobile and tablet.
 
 #### In Template
 
@@ -144,6 +144,9 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 * Request review for your changes and get approvals.
 
 ## Change Log
+
+### v1.0.0 (27-09-2019)
+* Tablet ads support default sizes upto 300px of width.
 
 ### v0.9 (27-09-2019)
 * Add missing single page targeting variables.
