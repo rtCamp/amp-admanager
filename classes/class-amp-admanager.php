@@ -97,7 +97,14 @@ class AMP_AdManager {
 
 			$dfp_ad_data['postTags'] = $tag;
 
-			// Add post_name and postid as targeting variable for single posts/pages.
+			// Add post_name and postid as targeting variable for single posts.
+			$dfp_ad_data['postName'] = $queried->post_name;
+			$dfp_ad_data['postId']   = $queried->ID;
+
+		} elseif ( is_page() ) {
+
+			$content_type = $queried->post_type;
+			// Add post_name and postid as targeting variable for single pages.
 			$dfp_ad_data['postName'] = $queried->post_name;
 			$dfp_ad_data['postId']   = $queried->ID;
 		}
