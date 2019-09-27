@@ -23,7 +23,7 @@ Works without AMP plugin as well for Non-AMP pages.
 Pass different ad sizes as attributes for mobile, tablet, and desktop ads. The plugin uses the width of the specified size to determine which device ad should be displayed. 
 
 1. Width equal to or more than `728` will be considered as desktop sizes eg. `980x250,970x90`.
-2. Width between `300` and `727` will be considered as a tablet sizes eg.`320x50,300x100,468x60`.
+2. Width between `300` and `600` will be considered as a tablet sizes eg.`320x50,300x100,468x60`.
 3. Width less than `300` will be considered as mobile sizes eg. `250x50,150x150`.
 
 In case of unusual sizes for desktop, tablet and mobile specific device size attribute, like
@@ -146,7 +146,7 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 ## Change Log
 
 ### v1.0.0 (27-09-2019)
-* Tablet ads support default sizes upto 300px of width.
+* Tablet ads support default sizes between 300px to 600px of width.
 
 ### v0.9 (27-09-2019)
 * Add missing single page targeting variables.
