@@ -3,6 +3,8 @@
 </p>
 
 # AMP AdManager 1.0.0
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
 AMP ads for all WordPress sites (AMP and Non-AMP). 
 This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ad with Single Request Architecture (SRA).
 Works without AMP plugin as well for Non-AMP pages. 
