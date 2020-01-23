@@ -34,6 +34,8 @@ class AMP_AdManager {
 		 */
 		add_action( 'wp_head', [ $this, 'load_amp_resources' ], 0 );
 
+		add_action( 'wp_footer', [ $this, 'add_sticky_amp_ad' ] );
+
 	}
 
 	/**
@@ -183,21 +185,38 @@ class AMP_AdManager {
 		 */
 		$ad_arefresh_rate = ( isset( $attr['ad-refresh'] ) && (int) $attr['ad-refresh'] >= 30 ) ? (int) $attr['ad-refresh'] : false;
 
-		/**
-		 * amp-ad markup.
-		 */
-		$ad_html = sprintf(
-			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
-			esc_attr( $attr['width'] ),
-			esc_attr( $attr['height'] ),
-			esc_attr( $media_query ),
-			esc_attr( $data_slot ),
-			esc_attr( $targeting_data_json ),
-			esc_attr( $attr['sizes'] ),
-			esc_attr( $layout ),
-			esc_attr( $data_loading_strategy ),
-			esc_attr( $ad_arefresh_rate )
-		);
+		if ( ! empty( $attr['sticky'] ) && true === $attr['sticky'] ) {
+			/**
+			 * amp-sticky-ad markup.
+			 */
+			$ad_html = sprintf(
+				'<amp-sticky-ad layout="nodisplay"> <amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad> </amp-sticky-ad>',
+				esc_attr( $attr['width'] ),
+				esc_attr( $attr['height'] ),
+				esc_attr( $media_query ),
+				esc_attr( $data_slot ),
+				esc_attr( $targeting_data_json ),
+				esc_attr( $attr['sizes'] ),
+				esc_attr( $data_loading_strategy ),
+				esc_attr( $ad_arefresh_rate )
+			);
+		} else {
+			/**
+			 * amp-ad markup.
+			 */
+			$ad_html = sprintf(
+				'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
+				esc_attr( $attr['width'] ),
+				esc_attr( $attr['height'] ),
+				esc_attr( $media_query ),
+				esc_attr( $data_slot ),
+				esc_attr( $targeting_data_json ),
+				esc_attr( $attr['sizes'] ),
+				esc_attr( $layout ),
+				esc_attr( $data_loading_strategy ),
+				esc_attr( $ad_arefresh_rate )
+			);
+		}
 
 		return $ad_html;
 	}
@@ -429,5 +448,33 @@ class AMP_AdManager {
 			load_template( AMP_ADMANAGER_ROOT . '/template-parts/amp-resources.php' );
 
 		}
+	}
+
+	/**
+	 * Add amp sticky ad to the footer.
+	 *
+	 * @return void
+	 */
+	public function add_sticky_amp_ad() {
+
+		if ( empty( self::$amp_settings['amp_admanager_enable_sticky_ads'] ) || '1' !== self::$amp_settings['amp_admanager_enable_sticky_ads'] ) {
+			return;
+		}
+
+		if ( empty( self::$amp_settings['amp_admanager_sticky_ad_unit'] ) ) {
+			return;
+		}
+
+		?>
+		<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script>
+		<?php
+
+		$ad_attr = [
+			'ad-unit'       => self::$amp_settings['amp_admanager_sticky_ad_unit'],
+			'desktop-sizes' => '320x50',
+			'sticky'        => true,
+		];
+
+		self::get_ads( $ad_attr, true );
 	}
 }
