@@ -187,7 +187,7 @@ class AMP_AdManager {
 
 		if ( ! empty( $attr['sticky'] ) && true === $attr['sticky'] ) {
 			/**
-			 * amp-sticky-ad markup.
+			 * Amp-sticky-ad markup.
 			 */
 			$ad_html = sprintf(
 				'<amp-sticky-ad layout="nodisplay"> <amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad> </amp-sticky-ad>',
@@ -202,7 +202,7 @@ class AMP_AdManager {
 			);
 		} else {
 			/**
-			 * amp-ad markup.
+			 * Amp-ad markup.
 			 */
 			$ad_html = sprintf(
 				'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
@@ -466,7 +466,7 @@ class AMP_AdManager {
 		}
 
 		?>
-		<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script>
+		<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script> // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 		<?php
 
 		$ad_attr = [

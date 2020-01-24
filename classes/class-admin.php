@@ -135,10 +135,20 @@ class Admin {
 		printf( '<input name="amp-admanager-menu-settings[dfp-network-id]" type="text" id="dfp-network-id" value="%s" class="regular-text">', esc_attr( $this->amp_settings['dfp-network-id'] ) );
 	}
 
+	/**
+	 * Prints markup for enable sticky ad checkbox.
+	 *
+	 * @return void
+	 */
 	public function get_enable_sticky_ad_checkbox_field() {
 		printf( '<input name="amp-admanager-menu-settings[amp_admanager_enable_sticky_ads]" type="checkbox" id="amp_admanager_enable_sticky_ads" value="1" %s>', checked( $this->amp_settings['amp_admanager_enable_sticky_ads'], '1', false ) );
 	}
 
+	/**
+	 * Prints markup for adunit name text field.
+	 *
+	 * @return void
+	 */
 	public function get_sticky_adunit_name_field() {
 		printf( '<input name="amp-admanager-menu-settings[amp_admanager_sticky_ad_unit]" type="text" id="amp_admanager_sticky_ad_unit" value="%s" class="regular-text">', esc_attr( $this->amp_settings['amp_admanager_sticky_ad_unit'] ) );
 	}
