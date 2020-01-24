@@ -472,9 +472,9 @@ class AMP_AdManager {
 
 		$ad_attr = [
 			'ad-unit'       => self::$amp_settings['amp_admanager_sticky_ad_unit'],
-			'mobile-sizes'  => '320x50',
-			'tablet-sizes'  => '320x50',
-			'desktop-sizes' => '320x50',
+			'desktop-sizes' => '600x90,728x90',
+			'tablet-sizes'  => '320x50,468x60',
+			'mobile-sizes'  => '320x50,468x60',
 			'sticky'        => true,
 		];
 
