@@ -466,7 +466,10 @@ class AMP_AdManager {
 		}
 
 		?>
-		<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script> // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+		// Ignoring beacuse cannot enqueue this script as we want custom attributes.
+		// phpcs:ignore enable 
+		<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script> 
+		// phpcs:ignore disable
 		<?php
 
 		$ad_attr = [
