@@ -20,4 +20,8 @@
 	</style>
 </noscript>
 <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
+
+<?php  //phpcs:disable ?>
 <script type="text/javascript" src="https://cdn.ampproject.org/v0.js" async></script>
+<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script>
+<?php //phpcs:enable ?>

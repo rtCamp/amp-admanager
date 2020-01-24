@@ -465,11 +465,6 @@ class AMP_AdManager {
 			return;
 		}
 
-		?>
-		<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script> <?php // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
-
-		<?php
-
 		$ad_attr = [
 			'ad-unit'       => self::$amp_settings['amp_admanager_sticky_ad_unit'],
 			'desktop-sizes' => '600x90,728x90',
