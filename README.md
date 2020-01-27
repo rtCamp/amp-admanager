@@ -145,6 +145,15 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 * Create PR against `master`.
 * Request review for your changes and get approvals.
 
+## Unit testing
+
+- Setup local unit test environment by running the below script from terminal with appropriate values.
+  - `./bin/install-wp-tests.sh <db-name> <db-user> <db-pass> [db-host] [wp-version] [skip-database-creation]`
+
+  - E.g `./bin/install-wp-tests.sh amp_admanager_test root root localhost`
+- Run `phpunit` in terminal from cloned project directory to run all test cases.
+- Run `phpunit ./tests/classes/test-class.php` with file path to run specific tests.
+
 ## Change Log
 
 ### v1.0.0 (27-09-2019)
