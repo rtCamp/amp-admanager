@@ -185,37 +185,23 @@ class AMP_AdManager {
 		 */
 		$ad_arefresh_rate = ( isset( $attr['ad-refresh'] ) && (int) $attr['ad-refresh'] >= 30 ) ? (int) $attr['ad-refresh'] : false;
 
+		$layout = ( true === $attr['sticky'] ) ? '' : esc_attr( $layout );
+
+		$ad_html = sprintf(
+			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
+			esc_attr( $attr['width'] ),
+			esc_attr( $attr['height'] ),
+			esc_attr( $media_query ),
+			esc_attr( $data_slot ),
+			esc_attr( $targeting_data_json ),
+			esc_attr( $attr['sizes'] ),
+			$layout,
+			esc_attr( $data_loading_strategy ),
+			esc_attr( $ad_arefresh_rate )
+		);
+
 		if ( ! empty( $attr['sticky'] ) && true === $attr['sticky'] ) {
-			/**
-			 * Amp-sticky-ad markup.
-			 */
-			$ad_html = sprintf(
-				'<amp-sticky-ad layout="nodisplay"> <amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad> </amp-sticky-ad>',
-				esc_attr( $attr['width'] ),
-				esc_attr( $attr['height'] ),
-				esc_attr( $media_query ),
-				esc_attr( $data_slot ),
-				esc_attr( $targeting_data_json ),
-				esc_attr( $attr['sizes'] ),
-				esc_attr( $data_loading_strategy ),
-				esc_attr( $ad_arefresh_rate )
-			);
-		} else {
-			/**
-			 * Amp-ad markup.
-			 */
-			$ad_html = sprintf(
-				'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
-				esc_attr( $attr['width'] ),
-				esc_attr( $attr['height'] ),
-				esc_attr( $media_query ),
-				esc_attr( $data_slot ),
-				esc_attr( $targeting_data_json ),
-				esc_attr( $attr['sizes'] ),
-				esc_attr( $layout ),
-				esc_attr( $data_loading_strategy ),
-				esc_attr( $ad_arefresh_rate )
-			);
+			$ad_html = '<amp-sticky-ad layout="nodisplay">' . $ad_html . '</amp-sticky-ad>';
 		}
 
 		return $ad_html;
@@ -282,6 +268,13 @@ class AMP_AdManager {
 		}
 
 		return $ad_html;
+	}
+
+	public static function get_sticky_ad( $attr = [], $echo = false ) {
+
+		$attr['sticky'] = true;
+
+		return self::get_ads( $attr, $echo );
 	}
 
 	/**
@@ -470,9 +463,8 @@ class AMP_AdManager {
 			'desktop-sizes' => '600x90,728x90',
 			'tablet-sizes'  => '320x50,468x60',
 			'mobile-sizes'  => '320x50,468x60',
-			'sticky'        => true,
 		];
 
-		self::get_ads( $ad_attr, true );
+		self::get_sticky_ad( $ad_attr, true );
 	}
 }
