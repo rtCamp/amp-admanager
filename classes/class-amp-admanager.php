@@ -270,6 +270,14 @@ class AMP_AdManager {
 		return $ad_html;
 	}
 
+	/**
+	 * Get amp sticky ad html for all the sizes.
+	 *
+	 * @param array   $attr shortcode attributes.
+	 * @param boolean $echo whether to echo or return html code.
+	 *
+	 * @return string
+	 */
 	public static function get_sticky_ad( $attr = [], $echo = false ) {
 
 		$attr['sticky'] = true;
