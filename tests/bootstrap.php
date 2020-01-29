@@ -24,6 +24,7 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 	require_once dirname( dirname( __FILE__ ) ) . '/amp-admanager.php';
+	require_once dirname( __FILE__ ) . '/helpers/class-utility.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
