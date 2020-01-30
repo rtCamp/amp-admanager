@@ -62,9 +62,11 @@ class Test_Admin extends \WP_UnitTestCase {
 
 		$this->_instance->amp_admanager_menu_init();
 
-		$this->assertTrue(
-			array_key_exists( 'amp-admanager-menu', $new_whitelist_options ),
-			'Option Group amp-admanager-menu has not been created' );
+		$this->assertarrayHasKey(
+			'amp-admanager-menu',
+			$new_whitelist_options,
+			'Option Group amp-admanager-menu has not been created'
+		);
 
 		$settings = $new_whitelist_options['amp-admanager-menu'];
 
