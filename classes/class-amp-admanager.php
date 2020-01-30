@@ -430,6 +430,10 @@ class AMP_AdManager {
 		<meta name="amp-ad-doubleclick-sra" />
 		<?php
 
+		if ( ! empty( self::$amp_settings['amp_admanager_enable_sticky_ads'] ) ) {
+			echo '<script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script>'; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+		}
+
 		// Check if current page is amp page.
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			return;
@@ -451,28 +455,4 @@ class AMP_AdManager {
 		}
 	}
 
-	/**
-	 * Add amp sticky ad to the footer.
-	 *
-	 * @return void
-	 */
-	public function add_sticky_amp_ad() {
-
-		if ( empty( self::$amp_settings['amp_admanager_enable_sticky_ads'] ) || '1' !== self::$amp_settings['amp_admanager_enable_sticky_ads'] ) {
-			return;
-		}
-
-		if ( empty( self::$amp_settings['amp_admanager_sticky_ad_unit'] ) ) {
-			return;
-		}
-
-		$ad_attr = [
-			'ad-unit'       => self::$amp_settings['amp_admanager_sticky_ad_unit'],
-			'desktop-sizes' => '600x90,728x90',
-			'tablet-sizes'  => '320x50,468x60',
-			'mobile-sizes'  => '320x50,468x60',
-		];
-
-		self::get_sticky_ad( $ad_attr, true );
-	}
 }
