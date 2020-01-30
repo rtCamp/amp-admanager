@@ -9,7 +9,7 @@
     </rule>
     <rule ref="WordPress" />
 
-    <config name="testVersion" value="7.0-"/>
+    <config name="testVersion" value="5.4-"/>
 
     <arg name="extensions" value="php"/>
 
