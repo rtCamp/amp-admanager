@@ -29,6 +29,11 @@ class Test_Admin extends \WP_UnitTestCase {
 	 * @throws \ReflectionException
 	 */
 	public function test_construct() {
+		// Set demo data for settings.
+		update_option( 'amp-admanager-menu-settings', array(
+			'dfp-network-id' => '123456789',
+			'load-amp-resources' => '1',
+		)  );
 		Utility::invoke_method( $this->_instance, '__construct' );
 		$this->assertEquals( 10, has_action( 'admin_menu', [ $this->_instance, 'amp_admanager_menu' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_init', [ $this->_instance, 'amp_admanager_menu_init' ] ) );

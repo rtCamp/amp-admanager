@@ -29,6 +29,11 @@ class Test_Shortcode extends \WP_UnitTestCase {
 	 * @throws \ReflectionException
 	 */
 	public function test_construct() {
+		// Set demo data for settings.
+		update_option( 'amp-admanager-menu-settings', array(
+			'dfp-network-id' => '123456789',
+			'load-amp-resources' => '1',
+		)  );
 		Utility::invoke_method( $this->_instance, '__construct' );
 		// Check existence of shortcode.
 		$this->assertTrue( shortcode_exists( 'ampad' ) );
