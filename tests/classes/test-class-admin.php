@@ -113,16 +113,12 @@ class Test_Admin extends \WP_UnitTestCase {
 	public function test_amp_admanager_menu_html() {
 		// Test access of user with privileges.
 		wp_set_current_user( $this->factory()->user->create( array( 'role' => 'administrator' ) ) );
-		ob_start();
-		$this->_instance->amp_admanager_menu_html();
-		$amp_ad_manager_settings_page = ob_get_clean();
+		$amp_ad_manager_settings_page = Utility::buffer_and_return( [ $this->_instance, 'amp_admanager_menu_html' ] );
 		$this->assertContains( 'Global Settings', $amp_ad_manager_settings_page );
 
 		// Test access of user without privileges.
 		wp_set_current_user( $this->factory()->user->create( array( 'role' => 'author' ) ) );
-		ob_start();
-		$this->_instance->amp_admanager_menu_html();
-		$amp_ad_manager_settings_page = ob_get_clean();
+		$amp_ad_manager_settings_page = Utility::buffer_and_return( [ $this->_instance, 'amp_admanager_menu_html' ] );
 		$this->assertContains( 'You do not have sufficient permissions to access this page.', $amp_ad_manager_settings_page );
 	}
 
@@ -130,19 +126,15 @@ class Test_Admin extends \WP_UnitTestCase {
 	 * @covers \AMP_AdManager\Admin::get_checkbox_field
 	 */
 	public function test_get_checkbox_field() {
-		ob_start();
-		$this->_instance->get_checkbox_field();
-		$amp_ad_manager_checkbox_field = ob_get_clean();
-		$this->assertContains( 'id="load-amp-resources"', $amp_ad_manager_checkbox_field );
+		$amp_ad_manager_checkbox_field = Utility::buffer_and_return( [ $this->_instance, 'get_checkbox_field' ] );
+		$this->assertContains( '<input name="amp-admanager-menu-settings[load-amp-resources]" type="checkbox" id="load-amp-resources"', $amp_ad_manager_checkbox_field );
 	}
 
 	/**
 	 * @covers \AMP_AdManager\Admin::get_text_field
 	 */
 	public function test_get_text_field() {
-		ob_start();
-		$this->_instance->get_text_field();
-		$amp_ad_manager_checkbox_field = ob_get_clean();
-		$this->assertContains( 'id="dfp-network-id"', $amp_ad_manager_checkbox_field );
+		$amp_ad_manager_textbox_field = Utility::buffer_and_return( [ $this->_instance, 'get_text_field' ] );
+		$this->assertContains( '<input name="amp-admanager-menu-settings[dfp-network-id]" type="text" id="dfp-network-id"', $amp_ad_manager_textbox_field );
 	}
 }
