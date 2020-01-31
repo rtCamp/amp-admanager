@@ -226,7 +226,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	 */
 	public function test_get_amp_ad() {
 
-		$expected_output = '<amp-ad width="336" height="280" media="(min-width: 500px) and (max-width: 799px)" type="doubleclick" data-slot="//AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="336x280" data-multi-size-validation="false" layout="responsive" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
+		$expected_output = '<amp-ad width="336" height="280" media="(min-width: 500px) and (max-width: 799px)" type="doubleclick" data-slot="/123456789/AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="336x280" data-multi-size-validation="false" layout="responsive" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
 		$attr            = [
 			'ad-unit' => 'AMP_ADTest',
 			'max'     => 799,
@@ -254,7 +254,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	public function test_get_ads() {
 
 		// Mobile Ads.
-		$expected_output = '<amp-ad width="300" height="250" media="(max-width: 499px)" type="doubleclick" data-slot="//AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="300x250" data-multi-size-validation="false" layout="fixed" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
+		$expected_output = '<amp-ad width="300" height="250" media="(max-width: 499px)" type="doubleclick" data-slot="/123456789/AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="300x250" data-multi-size-validation="false" layout="fixed" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
 		$ad_attr         = [
 			'ad-unit'      => 'AMP_ADTest',
 			'mobile-sizes' => '300x250',
@@ -266,7 +266,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$this->assertEquals( $expected_output, $output );
 
 		// Tablet Ads.
-		$expected_output = '<amp-ad width="336" height="280" media="(min-width: 500px) and (max-width: 799px)" type="doubleclick" data-slot="//AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="336x280" data-multi-size-validation="false" layout="fixed" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
+		$expected_output = '<amp-ad width="336" height="280" media="(min-width: 500px) and (max-width: 799px)" type="doubleclick" data-slot="/123456789/AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="336x280" data-multi-size-validation="false" layout="fixed" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
 		$ad_attr         = [
 			'ad-unit'      => 'AMP_ADTest',
 			'tablet-sizes' => '336x280',
@@ -278,7 +278,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$this->assertEquals( $expected_output, $output );
 
 		// Desktop ads.
-		$expected_output = '<amp-ad width="970" height="250" media="(min-width: 800px)" type="doubleclick" data-slot="//AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="970x250" data-multi-size-validation="false" layout="responsive" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
+		$expected_output = '<amp-ad width="970" height="250" media="(min-width: 800px)" type="doubleclick" data-slot="/123456789/AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;example.org&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;}}\' data-multi-size="970x250" data-multi-size-validation="false" layout="responsive" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
 		$ad_attr         = [
 			'ad-unit' => 'AMP_ADTest',
 			'sizes'   => '970x250',
