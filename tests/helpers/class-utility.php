@@ -1,11 +1,11 @@
 <?php
 /**
- * Utility methods
+ * Utility Methods
  *
  * @package AMP_AdManager
  */
 
-namespace AMP_AdManager\UnitTests;
+namespace AMP_AdManager\Tests;
 
 /**
  * Class Utility
@@ -21,6 +21,7 @@ class Utility {
 	 * @param array  $parameters           The Parameters to be passed to the hidden method being called.
 	 *
 	 * @return mixed                      Result returned by the hidden method being called.
+	 * @throws \ReflectionException
 	 */
 	public static function invoke_method( $object_or_class_name, string $method_name, array $parameters = [] ) {
 
@@ -50,6 +51,7 @@ class Utility {
 	 * @param string $property_name        The name of the property to access.
 	 *
 	 * @return mixed                      Value of the hidden property being accessed.
+	 * @throws \ReflectionException
 	 */
 	public static function get_property( $object_or_class_name, $property_name ) {
 
@@ -79,6 +81,7 @@ class Utility {
 	 * @param mixed  $property_value       The value to be set for the hidden property.
 	 *
 	 * @return mixed                      Value of the hidden property being accessed.
+	 * @throws \ReflectionException
 	 */
 	public static function set_and_get_property( $object_or_class_name, string $property_name, $property_value ) {
 
@@ -101,13 +104,14 @@ class Utility {
 	}
 
 	/**
-	 * Utility method to capture output from a function.
+	 * Utility method to capture output from a function
 	 *
-	 * @param Callable $callback The callback from which output is to be captured
-	 * @param array    $parameters Parameters to be passed to the $callback.
+	 * @param Callable $callback   The callback from which output is to be captured
+	 * @param array    $parameters Parameters to be passed to the $callback
+	 *
 	 * @return mixed Output from callback
 	 *
-	 * @throws \ErrorException Error exception.
+	 * @throws \ErrorException
 	 */
 	public static function buffer_and_return( $callback, array $parameters = array() ) {
 

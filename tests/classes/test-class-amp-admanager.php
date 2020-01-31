@@ -5,7 +5,7 @@
  * @package AMP_AdManager
  */
 
-namespace AMP_AdManager\UnitTests;
+namespace AMP_AdManager\Tests;
 
 use AMP_AdManager\AMP_AdManager;
 
@@ -494,7 +494,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 
 		$expected = '<meta name="amp-ad-doubleclick-sra" />';
 
-		update_option( 'amp-admanager-menu-settings', [ 'load-amp-resources' => '1' ] );
+		update_option( 'amp-admanager-menu-settings', [ 'load-amp-resources' => '1', 'dfp-network-id' => '' ] );
 
 		// Update settings after updating option.
 		AMP_AdManager::$amp_settings = get_option( 'amp-admanager-menu-settings' );
