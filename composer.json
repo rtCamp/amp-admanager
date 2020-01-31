@@ -16,10 +16,10 @@
     }
   ],
   "require": {
-    "composer/installers": "^1.6",
-    "wpackagist-plugin/amp":"1.4.2"
+    "composer/installers": "^1.6"
   },
   "require-dev": {
+    "wpackagist-plugin/amp":"1.4.2"
   },
   "extra": {
     "installer-paths": {

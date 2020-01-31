@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa8bad7fdb6ec16483c6eac8d7f0cc85",
+    "content-hash": "71c362461e9ae58cb24b6e2573619cd6",
     "packages": [
         {
             "name": "composer/installers",
@@ -127,7 +127,9 @@
                 "zikula"
             ],
             "time": "2019-08-12T15:00:31+00:00"
-        },
+        }
+    ],
+    "packages-dev": [
         {
             "name": "wpackagist-plugin/amp",
             "version": "1.4.2",
@@ -149,7 +151,6 @@
             "homepage": "https://wordpress.org/plugins/amp/"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

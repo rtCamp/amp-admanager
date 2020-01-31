@@ -105,7 +105,13 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$post_id = $this->factory->post->create( [ 'post_type' => 'post' ] );
 
 		$conditions = [ 'is_home' => true ];
-		$this->mock_wp_query( [ 'post_type' => 'post', 'posts_per_page' => 1 ], $conditions );
+		$this->mock_wp_query(
+			[
+				'post_type'      => 'post',
+				'posts_per_page' => 1,
+			],
+			$conditions
+		);
 
 		$attr   = [
 			'ad-unit'   => 'AMP_ADTest',
@@ -114,7 +120,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 				'contentType' => '',
 				'siteDomain'  => 'example.com',
 				'adId'        => 'AMP_ADTest',
-			]
+			],
 		];
 		$output = AMP_AdManager::get_dfp_ad_targeting_data( $attr );
 
@@ -123,7 +129,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 				'contentType' => '',
 				'siteDomain'  => 'example.com',
 				'adId'        => 'AMP_ADTest',
-			]
+			],
 		];
 
 		$this->assertNotEmpty( $output );
@@ -131,8 +137,18 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$this->assertEquals( $expected_output, $output );
 
 		// Test case for is_single() condition.
-		$conditions = [ 'is_home' => false, 'is_single' => true, 'is_singular' => true ];
-		$this->mock_wp_query( [ 'post_type' => 'post', 'posts_per_page' => 1 ], $conditions );
+		$conditions = [
+			'is_home'     => false,
+			'is_single'   => true,
+			'is_singular' => true,
+		];
+		$this->mock_wp_query(
+			[
+				'post_type'      => 'post',
+				'posts_per_page' => 1,
+			],
+			$conditions
+		);
 
 		$attr   = [
 			'ad-unit' => 'AMP_ADTest',
@@ -151,8 +167,18 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 
 		// Test case for is_page() condition.
 		$this->factory->post->create( [ 'post_type' => 'page' ] );
-		$conditions = [ 'is_home' => false, 'is_page' => true, 'is_singular' => true ];
-		$this->mock_wp_query( [ 'post_type' => 'page', 'posts_per_page' => 1 ], $conditions );
+		$conditions = [
+			'is_home'     => false,
+			'is_page'     => true,
+			'is_singular' => true,
+		];
+		$this->mock_wp_query(
+			[
+				'post_type'      => 'page',
+				'posts_per_page' => 1,
+			],
+			$conditions
+		);
 
 		$output = AMP_AdManager::get_dfp_ad_targeting_data( $attr );
 
@@ -186,7 +212,14 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 			]
 		);
 		$conditions = [ 'is_category' => true ];
-		$this->mock_wp_query( [ 'post_type' => 'page', 'category_name' => 'Parent', 'cat' => $term->term_id ], $conditions );
+		$this->mock_wp_query(
+			[
+				'post_type'     => 'page',
+				'category_name' => 'Parent',
+				'cat'           => $term->term_id,
+			],
+			$conditions
+		);
 
 		$output = AMP_AdManager::get_dfp_ad_targeting_data( $attr );
 
@@ -201,8 +234,18 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 
 		// Test case for is_author() condition.
 		$user_id    = $this->factory->user->create( [ 'user_login' => 'testuser' ] );
-		$conditions = [ 'is_author' => true, 'is_home' => false, 'is_archive' => true ];
-		$this->mock_wp_query( [ 'post_type' => 'page', 'author' => $user_id ], $conditions );
+		$conditions = [
+			'is_author'  => true,
+			'is_home'    => false,
+			'is_archive' => true,
+		];
+		$this->mock_wp_query(
+			[
+				'post_type' => 'page',
+				'author'    => $user_id,
+			],
+			$conditions
+		);
 
 		$output = AMP_AdManager::get_dfp_ad_targeting_data( $attr );
 
@@ -494,7 +537,13 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 
 		$expected = '<meta name="amp-ad-doubleclick-sra" />';
 
-		update_option( 'amp-admanager-menu-settings', [ 'load-amp-resources' => '1', 'dfp-network-id' => '' ] );
+		update_option(
+			'amp-admanager-menu-settings',
+			[
+				'load-amp-resources' => '1',
+				'dfp-network-id'     => '',
+			]
+		);
 
 		// Update settings after updating option.
 		AMP_AdManager::$amp_settings = get_option( 'amp-admanager-menu-settings' );
@@ -503,7 +552,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$this->assertContains( $expected, $output );
 		$this->assertContains( '<style amp-boilerplate>', $output );
 		$this->assertContains( '<link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">', $output );
-		$this->assertContains( '<script type="text/javascript" src="https://cdn.ampproject.org/v0.js" async></script>', $output );
+		$this->assertContains( '<script type="text/javascript" src="https://cdn.ampproject.org/v0.js" async></script>', $output ); // phpcs:ignore
 
 		// Test for is_amp_endpoint() condition.
 		$user_mock = $this->factory->user->create_and_get( [ 'role' => 'administrator' ] );
