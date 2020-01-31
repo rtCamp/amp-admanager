@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Test_Post_Type for test case post type.
+ * Class Test_AMP_AdManager for test case post type.
  *
  * @package AMP_AdManager
  */
