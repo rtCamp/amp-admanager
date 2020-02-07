@@ -60,10 +60,14 @@ class AMP_AdManager {
 
 			if ( is_author() ) {
 
+				// todo: Check if username is available in queried object.
+				/**
+				 * Ignoring code coverage for below lines because username member is not available in queried object.
+				 */
 				if ( ! empty( $queried->data->username ) ) {
-					$dfp_ad_data['authorPage'] = $queried->data->username;
+					$dfp_ad_data['authorPage'] = $queried->data->username; // @codeCoverageIgnore
 				} elseif ( ! empty( $queried->username ) ) {
-					$dfp_ad_data['authorPage'] = $queried->username;
+					$dfp_ad_data['authorPage'] = $queried->username; // @codeCoverageIgnore
 				}
 			}
 
@@ -288,7 +292,7 @@ class AMP_AdManager {
 			if ( 728 <= (int) $width ) {
 				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
 			} elseif ( 300 <= (int) $width && 600 >= (int) $width ) {
-				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );	
+				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
 				if ( 350 >= (int) $width ) {
 				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
 				}

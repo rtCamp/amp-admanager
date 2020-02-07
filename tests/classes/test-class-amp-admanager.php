@@ -62,33 +62,15 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 				call_user_func(
 					sprintf( 'has_%s', $hook['type'] ),
 					$hook['name'],
-					array(
+					[
 						$this->_instance,
 						$hook['function'],
-					)
+					]
 				),
 				sprintf( 'AMP_AdManager::__construct() failed to register %1$s "%2$s" to %3$s()', $hook['type'], $hook['name'], $hook['function'] )
 			);
 		}
 
-	}
-
-	/**
-	 * Mock global wp query.
-	 *
-	 * @param array $args WP query arguments.
-	 * @param array $conditions wp query conditions.
-	 */
-	public function mock_wp_query( $args, $conditions ) {
-		$wp_query = new \WP_Query( $args );
-
-		foreach ( $conditions as $key => $value ) {
-			$wp_query->{$key} = $value;
-		}
-
-		$GLOBALS['wp_query']     = $wp_query;
-		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
-		do_action_ref_array( 'pre_get_posts', [ &$GLOBALS['wp_query'] ] );
 	}
 
 	/**
@@ -105,7 +87,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$post_id = $this->factory->post->create( [ 'post_type' => 'post' ] );
 
 		$conditions = [ 'is_home' => true ];
-		$this->mock_wp_query(
+		Utility::mock_wp_query(
 			[
 				'post_type'      => 'post',
 				'posts_per_page' => 1,
@@ -142,7 +124,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 			'is_single'   => true,
 			'is_singular' => true,
 		];
-		$this->mock_wp_query(
+		Utility::mock_wp_query(
 			[
 				'post_type'      => 'post',
 				'posts_per_page' => 1,
@@ -172,7 +154,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 			'is_page'     => true,
 			'is_singular' => true,
 		];
-		$this->mock_wp_query(
+		Utility::mock_wp_query(
 			[
 				'post_type'      => 'page',
 				'posts_per_page' => 1,
@@ -192,7 +174,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 
 		// Test case for is_archive() condition.
 		$conditions = [ 'is_archive' => true ];
-		$this->mock_wp_query( [ 'post_type' => 'page' ], $conditions );
+		Utility::mock_wp_query( [ 'post_type' => 'page' ], $conditions );
 
 		$output = AMP_AdManager::get_dfp_ad_targeting_data( $attr );
 
@@ -212,7 +194,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 			]
 		);
 		$conditions = [ 'is_category' => true ];
-		$this->mock_wp_query(
+		Utility::mock_wp_query(
 			[
 				'post_type'     => 'page',
 				'category_name' => 'Parent',
@@ -239,7 +221,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 			'is_home'    => false,
 			'is_archive' => true,
 		];
-		$this->mock_wp_query(
+		Utility::mock_wp_query(
 			[
 				'post_type' => 'page',
 				'author'    => $user_id,
@@ -547,7 +529,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 
 		// Update settings after updating option.
 		AMP_AdManager::$amp_settings = get_option( 'amp-admanager-menu-settings' );
-		$output                      = Utility::buffer_and_return( array( $this->_instance, 'load_amp_resources' ) );
+		$output                      = Utility::buffer_and_return( [ $this->_instance, 'load_amp_resources' ] );
 
 		$this->assertContains( $expected, $output );
 		$this->assertContains( '<style amp-boilerplate>', $output );
@@ -558,7 +540,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$user_mock = $this->factory->user->create_and_get( [ 'role' => 'administrator' ] );
 		wp_set_current_user( $user_mock->ID );
 		$_GET['amp_validate'] = true;
-		$output_user          = Utility::buffer_and_return( array( $this->_instance, 'load_amp_resources' ) );
+		$output_user          = Utility::buffer_and_return( [ $this->_instance, 'load_amp_resources' ] );
 
 		$this->assertEquals( $expected, $output_user );
 
