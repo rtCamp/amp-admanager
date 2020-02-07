@@ -9,7 +9,7 @@ AMP ads for all WordPress sites (AMP and Non-AMP).
 This plugin generates `<amp-ad>` code for your ads with breakpoints for responsive display of ad with Single Request Architecture (SRA).
 Works without AMP plugin as well for Non-AMP pages. 
 
-**Contributors:** [rtCamp](https://github.com/rtCamp/), [Vishal Dodiya](https://github.com/vishaldodiya), [Pradeep Sonawane](https://github.com/pradeep910), [Sagar Nasit](https://github.com/sagarnasit)
+**Author:** [rtCamp](https://github.com/rtCamp/)
 
 **Tags:** [amp](https://wordpress.org/plugins/tags/amp), [mobile](https://wordpress.org/plugins/tags/mobile)
 **Requires at least:** 4.9  
@@ -137,13 +137,38 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 | postName	| - post name slug (string - lowercase)  |
 | postId	| - post id (numeric) |
 
+## Contributors
+- [Vishal Dodiya](https://github.com/vishaldodiya)
+- [Pradeep Sonawane](https://github.com/pradeep910)
+- [Sagar Nasit](https://github.com/sagarnasit)
 
-## Development Flow
+## Contributing
 
-* Create new branch from 'master'.
-* Name it appropriately, i.e., `feature/GH-<issue-number>-<name>`,`<context>/GH-<issue-number>-<what_it_is>`.
-* Create PR against `master`.
-* Request review for your changes and get approvals.
+### Report a Bug
+
+Before you create a new issue, please search [existing issues](https://github.com/rtCamp/amp-admanager/issues) to see if there’s an existing resolution to it, or if it’s already been fixed in a newer version.
+
+Once you’ve done a bit of searching and discovered there isn’t an open or fixed issue for your bug, please [create a new issue](https://github.com/rtCamp/amp-admanager/issues/new). Include as much detail as you can, and clear steps to reproduce if possible.
+
+### Create a pull request
+
+Want to contribute a new feature? Please first open a new issue to discuss whether the feature is a good fit for the project.
+
+Once you've decided to commit the time to seeing your pull request through, please follow our guidelines for creating a pull request.
+
+1. Search existing issues. If you can’t find anything related to what you want to work on, open a new issue.
+
+1. Fork the repository.
+
+1. Create a branch from `develop` for each issue you’d like to address. Commit your changes.
+
+1. Push the code changes from your local clone to your fork.
+
+1. Open a pull request.
+
+1. Respond to code review feedback in a timely manner, recognizing development is a collaborative process.
+
+1. You need at least one approval and once your pull request has passed code review and tests, it will be merged into `develop` and be in the pipeline for the next release.
 
 ## Change Log
 
