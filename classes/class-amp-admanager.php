@@ -294,7 +294,7 @@ class AMP_AdManager {
 			} elseif ( 300 <= (int) $width && 600 >= (int) $width ) {
 				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
 				if ( 350 >= (int) $width ) {
-				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
+					$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
 				}
 			}
 		}

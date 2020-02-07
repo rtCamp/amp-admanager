@@ -141,10 +141,11 @@ class Utility {
 			$wp_query->{$key} = $value;
 		}
 
+		// phpcs:disable
 		$GLOBALS['wp_query']     = $wp_query;
 		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
 		do_action_ref_array( 'pre_get_posts', [ &$GLOBALS['wp_query'] ] );
-
+		// phpcs:enable
 	}
 
 }
