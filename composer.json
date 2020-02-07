@@ -1,0 +1,31 @@
+{
+  "name": "amp-admanager",
+  "description": "Amp Admanager Plugin",
+  "type": "wordpress-plugin",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "rtCamp",
+      "homepage": "https://rtcamp.com"
+    }
+  ],
+  "repositories":[
+    {
+      "type":"composer",
+      "url":"https://wpackagist.org"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.6"
+  },
+  "require-dev": {
+    "wpackagist-plugin/amp":"1.4.2"
+  },
+  "extra": {
+    "installer-paths": {
+      "../amp/": [
+        "wpackagist-plugin/amp"
+      ]
+    }
+  }
+}

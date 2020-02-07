@@ -23,8 +23,10 @@ require_once $_tests_dir . '/includes/functions.php';
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
+	// Load amp plugin.
+	require_once dirname( dirname( __FILE__ ) ) . '/../amp/amp.php';
 	require_once dirname( dirname( __FILE__ ) ) . '/amp-admanager.php';
-	require_once dirname( __FILE__ ) . '/helpers/class-utility.php';
+	require_once dirname( dirname( __FILE__ ) ) . '/tests/helpers/class-utility.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 

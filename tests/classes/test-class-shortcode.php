@@ -22,18 +22,25 @@ class Test_Shortcode extends \WP_UnitTestCase {
 	 * This function sets the instance for class \AMP_AdManager\Shortcode.
 	 */
 	public function setUp(): void {
+
 		// Set demo data for settings.
-		update_option( 'amp-admanager-menu-settings', array(
-			'dfp-network-id' => '123456789',
-			'load-amp-resources' => '1',
-		)  );
+		update_option(
+			'amp-admanager-menu-settings',
+			[
+				'dfp-network-id'     => '123456789',
+				'load-amp-resources' => '1',
+			]
+		);
 		new AMP_AdManager();
 		$this->_instance = new Shortcode();
+
 	}
 
 	/**
+	 * Tests construct.
+	 *
 	 * @covers \AMP_AdManager\Shortcode::__construct
-	 * @throws \ReflectionException
+	 * @throws \ReflectionException Throws ReflectionException exception.
 	 */
 	public function test_construct() {
 		Utility::invoke_method( $this->_instance, '__construct' );
@@ -42,6 +49,8 @@ class Test_Shortcode extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests render_amp_ad.
+	 *
 	 * @covers \AMP_AdManager\Shortcode::render_amp_ad
 	 */
 	public function test_render_amp_ad() {
