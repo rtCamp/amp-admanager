@@ -142,7 +142,7 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 
 * Create new branch from 'master'.
 * Name it appropriately, i.e., `feature/GH-<issue-number>-<name>`,`<context>/GH-<issue-number>-<what_it_is>`.
-* Create PR against `master`.
+* Create PR against `develop`.
 * Request review for your changes and get approvals.
 
 ## Change Log
