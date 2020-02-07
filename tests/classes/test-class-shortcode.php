@@ -26,10 +26,10 @@ class Test_Shortcode extends \WP_UnitTestCase {
 		// Set demo data for settings.
 		update_option(
 			'amp-admanager-menu-settings',
-			array(
+			[
 				'dfp-network-id'     => '123456789',
 				'load-amp-resources' => '1',
-			)
+			]
 		);
 		new AMP_AdManager();
 		$this->_instance = new Shortcode();
