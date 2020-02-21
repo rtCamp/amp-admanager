@@ -137,14 +137,6 @@ AMP_AdManager\AMP_AdManager::get_ads( $attr, true );
 | postName	| - post name slug (string - lowercase)  |
 | postId	| - post id (numeric) |
 
-
-## Development Flow
-
-* Create new branch from 'master'.
-* Name it appropriately, i.e., `feature/GH-<issue-number>-<name>`,`<context>/GH-<issue-number>-<what_it_is>`.
-* Create PR against `master`.
-* Request review for your changes and get approvals.
-
 ## Unit testing
 
 - Setup local unit test environment by running the below script from terminal with appropriate values.
