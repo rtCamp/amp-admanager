@@ -37,7 +37,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test constructor.
+	 * Tests class constructor.
 	 *
 	 * @covers ::__construct
 	 */
@@ -74,9 +74,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for get_dfp_ad_targeting_data.
+	 * Tests `get_dfp_ad_targeting_data` function.
 	 *
 	 * @covers ::get_dfp_ad_targeting_data
+	 *
+	 * @return void
 	 */
 	public function test_get_dfp_ad_targeting_data() {
 
@@ -245,9 +247,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for get_amp_ad.
+	 * Tests `get_amp_ad` function.
 	 *
 	 * @covers ::get_amp_ad
+	 *
+	 * @return void
 	 */
 	public function test_get_amp_ad() {
 
@@ -272,9 +276,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for get_ads.
+	 * Tests `get_ads` function.
 	 *
 	 * @covers ::get_ads
+	 *
+	 * @return void
 	 */
 	public function test_get_ads() {
 
@@ -322,9 +328,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for filter_breakpoints.
+	 * Tests `filter_breakpoints` function.
 	 *
 	 * @covers ::filter_breakpoints
+	 *
+	 * @return void
 	 */
 	public function test_filter_breakpoints() {
 
@@ -394,9 +402,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for set_max_height_and_width.
+	 * Tests `set_max_height_and_width` function.
 	 *
 	 * @covers ::set_max_height_and_width
+	 *
+	 * @return void
 	 */
 	public function test_set_max_height_and_width() {
 
@@ -429,9 +439,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for set_custom_sizes.
+	 * Tests `set_custom_sizes` function.
 	 *
 	 * @covers ::set_custom_sizes
+	 *
+	 * @return void
 	 */
 	public function test_set_custom_sizes() {
 
@@ -492,9 +504,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for get_slot_media_query.
+	 * Tests `get_slot_media_query` function.
 	 *
 	 * @covers ::get_slot_media_query
+	 *
+	 * @return void
 	 */
 	public function test_get_slot_media_query() {
 
@@ -511,9 +525,11 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for load_amp_resources.
+	 * Tests `load_amp_resources` function.
 	 *
 	 * @covers ::load_amp_resources
+	 *
+	 * @return void
 	 */
 	public function test_load_amp_resources() {
 

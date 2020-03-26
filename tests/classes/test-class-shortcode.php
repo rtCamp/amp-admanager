@@ -20,6 +20,8 @@ class Test_Shortcode extends \WP_UnitTestCase {
 
 	/**
 	 * This function sets the instance for class \AMP_AdManager\Shortcode.
+	 *
+	 * @return void
 	 */
 	public function setUp(): void {
 
@@ -37,7 +39,7 @@ class Test_Shortcode extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests construct.
+	 * Tests class construct.
 	 *
 	 * @covers \AMP_AdManager\Shortcode::__construct
 	 * @throws \ReflectionException Throws ReflectionException exception.
@@ -49,7 +51,7 @@ class Test_Shortcode extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests render_amp_ad.
+	 * Tests `render_amp_ad` function.
 	 *
 	 * @covers \AMP_AdManager\Shortcode::render_amp_ad
 	 */

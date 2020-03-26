@@ -19,14 +19,21 @@ class Test_Admin extends \WP_UnitTestCase {
 
 	/**
 	 * This function sets the instance for class \AMP_AdManager\Admin.
+	 *
+	 * @return void
 	 */
 	public function setUp(): void {
 		$this->_instance = new Admin();
 	}
 
 	/**
+	 * Tests class construct.
+	 *
 	 * @covers \AMP_AdManager\Admin::__construct
-	 * @throws \ReflectionException
+	 *
+	 * @throws \ReflectionException Throws reflection exception.
+	 *
+	 * @return void
 	 */
 	public function test_construct() {
 		// Set demo data for settings.
@@ -40,7 +47,11 @@ class Test_Admin extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests `amp_admanager_menu` function.
+	 *
 	 * @covers \AMP_AdManager\Admin::amp_admanager_menu
+	 *
+	 * @return void
 	 */
 	public function test_amp_admanager_menu() {
 		$current_user = get_current_user_id();
@@ -55,7 +66,11 @@ class Test_Admin extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests `amp_admanager_menu_init` function.
+	 *
 	 * @covers \AMP_AdManager\Admin::amp_admanager_menu_init
+	 *
+	 * @return void
 	 */
 	public function test_amp_admanager_menu_init() {
 		global $new_whitelist_options, $wp_settings_sections, $wp_settings_fields;
@@ -115,7 +130,11 @@ class Test_Admin extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests `amp_admanager_menu_html` function.
+	 *
 	 * @covers \AMP_AdManager\Admin::amp_admanager_menu_html
+	 *
+	 * @return void
 	 */
 	public function test_amp_admanager_menu_html() {
 		// Test access of user with privileges.
@@ -130,7 +149,11 @@ class Test_Admin extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests `get_checkbox_field` function.
+	 *
 	 * @covers \AMP_AdManager\Admin::get_checkbox_field
+	 *
+	 * @return void
 	 */
 	public function test_get_checkbox_field() {
 		$amp_ad_manager_checkbox_field = Utility::buffer_and_return( [ $this->_instance, 'get_checkbox_field' ] );
@@ -138,7 +161,11 @@ class Test_Admin extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests `get_text_field` function.
+	 *
 	 * @covers \AMP_AdManager\Admin::get_text_field
+	 *
+	 * @return void
 	 */
 	public function test_get_text_field() {
 		$amp_ad_manager_textbox_field = Utility::buffer_and_return( [ $this->_instance, 'get_text_field' ] );
