@@ -345,7 +345,6 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$output = Utility::invoke_method( $this->_instance, 'filter_breakpoints', [ $ad_attr['sizes'] ] );
 
 		$this->assertNotEmpty( $output );
-		$this->assertNotEmpty( $output );
 		$this->assertTrue( is_array( $output ) );
 
 		$this->assertArrayHasKey( 'desktop', $output );
