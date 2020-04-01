@@ -7,7 +7,6 @@
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
         <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
     </rule>
-    <rule ref="WordPress" />
 
     <config name="testVersion" value="5.4-"/>
 
