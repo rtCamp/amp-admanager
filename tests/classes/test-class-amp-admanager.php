@@ -419,7 +419,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$output = Utility::invoke_method( $this->_instance, 'set_max_height_and_width', [ 'mobile', $breakpoint, 300, 50 ] );
 
 		$this->assertNotEmpty( $output );
-		$this->assertNotEmpty( $output );
+
 		$this->assertTrue( is_array( $output ) );
 
 		$this->assertArrayHasKey( 'desktop', $output );
