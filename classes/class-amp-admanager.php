@@ -34,8 +34,6 @@ class AMP_AdManager {
 		 */
 		add_action( 'wp_head', [ $this, 'load_amp_resources' ], 0 );
 
-		add_action( 'wp_footer', [ $this, 'add_sticky_amp_ad' ] );
-
 	}
 
 	/**
@@ -185,10 +183,14 @@ class AMP_AdManager {
 		 */
 		$ad_arefresh_rate = ( isset( $attr['ad-refresh'] ) && (int) $attr['ad-refresh'] >= 30 ) ? (int) $attr['ad-refresh'] : false;
 
-		$layout = ( true === $attr['sticky'] ) ? '' : esc_attr( $layout );
+		if ( ! empty( $attr['sticky'] ) && true === $attr['sticky'] ) {
+			$layout = '';
+		} else {
+			$layout = sprintf( 'layout=%s', $layout );
+		}
 
 		$ad_html = sprintf(
-			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" layout="%s" data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
+			'<amp-ad width="%s" height="%s" media="%s" type="doubleclick" data-slot="%s" json=\'%s\' data-multi-size="%s" data-multi-size-validation="false" %s data-loading-strategy="%s" data-enable-refresh=%s></amp-ad>',
 			esc_attr( $attr['width'] ),
 			esc_attr( $attr['height'] ),
 			esc_attr( $media_query ),
