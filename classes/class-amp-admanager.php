@@ -153,7 +153,12 @@ class AMP_AdManager {
 		$network_id = ( ! empty( $attr['network-id'] ) ) ? $attr['network-id'] : self::$amp_settings['dfp-network-id'];
 		$data_slot  = sprintf( '/%s/%s', $network_id, $attr['ad-unit'] );
 
-		$media_query = self::get_slot_media_query( $attr['min'], $attr['max'] );
+		// Add media query only non sticky ads.
+		if ( empty( $attr['sticky'] ) ) {
+			$media_query = self::get_slot_media_query( $attr['min'], $attr['max'] );
+		} else {
+			$media_query = '';
+		}
 
 		/**
 		 * Encode targeting data for json attribute in amp-ad.
@@ -196,7 +201,7 @@ class AMP_AdManager {
 			esc_attr( $media_query ),
 			esc_attr( $data_slot ),
 			esc_attr( $targeting_data_json ),
-			esc_attr( $attr['sizes'] ),
+			esc_attr( $attr['sizes'] ?? '' ),
 			$layout,
 			esc_attr( $data_loading_strategy ),
 			esc_attr( $ad_arefresh_rate )
@@ -282,9 +287,17 @@ class AMP_AdManager {
 	 */
 	public static function get_sticky_ad( $attr = [], $echo = false ) {
 
-		$attr['sticky'] = true;
-
-		return self::get_ads( $attr, $echo );
+		$attr['sticky']  = true;
+		$attr['ad-unit'] = esc_attr( self::$amp_settings['amp_admanager_sticky_ad_unit'] );
+		$attr['width']   = '728'; // @Todo Create setting fields from adn use height and width from settings.
+		$attr['height']  = '90';
+		$attr['layout']  = 'fixed';
+		
+		if( true === $echo ) {
+			echo self::get_amp_ad( $attr, $echo );
+		} else {
+			return self::get_amp_ad( $attr, $echo );
+		}
 	}
 
 	/**
