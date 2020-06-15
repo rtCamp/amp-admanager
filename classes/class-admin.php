@@ -84,6 +84,13 @@ class Admin {
 			'amp-admanager-menu-page'
 		);
 
+		add_settings_section(
+			'amp-admanager-sticky-ad-settings',
+			__( 'Sticky ad Settings', 'amp-admanager' ),
+			'__return_empty_string',
+			'amp-admanager-menu-page'
+		);
+
 		add_settings_field(
 			'dfp-network-id',
 			esc_html__( 'DFP Network ID', 'amp-admanager' ),
@@ -105,7 +112,7 @@ class Admin {
 			esc_html__( 'Enable Sticky Ads', 'amp-admanager' ),
 			[ $this, 'get_enable_sticky_ad_checkbox_field' ],
 			'amp-admanager-menu-page',
-			'amp-admanager-general-settings'
+			'amp-admanager-sticky-ad-settings'
 		);
 
 		add_settings_field(
@@ -113,7 +120,23 @@ class Admin {
 			esc_html__( 'Sticky adunit name', 'amp-admanager' ),
 			[ $this, 'get_sticky_adunit_name_field' ],
 			'amp-admanager-menu-page',
-			'amp-admanager-general-settings'
+			'amp-admanager-sticky-ad-settings'
+		);
+
+		add_settings_field(
+			'amp_admanager_sticky_ad_height',
+			esc_html__( 'Sticky Ad height', 'amp-admanager' ),
+			[ $this, 'get_sticky_adunit_height_field' ],
+			'amp-admanager-menu-page',
+			'amp-admanager-sticky-ad-settings'
+		);
+
+		add_settings_field(
+			'amp_admanager_sticky_ad_width',
+			esc_html__( 'Sticky Ad width', 'amp-admanager' ),
+			[ $this, 'get_sticky_adunit_width_field' ],
+			'amp-admanager-menu-page',
+			'amp-admanager-sticky-ad-settings'
 		);
 	}
 
@@ -151,5 +174,23 @@ class Admin {
 	 */
 	public function get_sticky_adunit_name_field() {
 		printf( '<input name="amp-admanager-menu-settings[amp_admanager_sticky_ad_unit]" type="text" id="amp_admanager_sticky_ad_unit" value="%s" class="regular-text">', esc_attr( $this->amp_settings['amp_admanager_sticky_ad_unit'] ) );
+	}
+
+	/**
+	 * Prints markup for sticky ad width field.
+	 *
+	 * @return void
+	 */
+	public function get_sticky_adunit_width_field() {
+		printf( '<input name="amp-admanager-menu-settings[amp_admanager_sticky_ad_width]" type="text" id="amp_admanager_sticky_ad_width" value="%s" class="regular-text">', esc_attr( $this->amp_settings['amp_admanager_sticky_ad_width'] ) );
+	}
+
+	/**
+	 * Prints markup for sticky ad height field.
+	 *
+	 * @return void
+	 */
+	public function get_sticky_adunit_height_field() {
+		printf( '<input name="amp-admanager-menu-settings[amp_admanager_sticky_ad_height]" type="text" id="amp_admanager_sticky_ad_height" value="%s" class="regular-text">', esc_attr( $this->amp_settings['amp_admanager_sticky_ad_height'] ) );
 	}
 }
