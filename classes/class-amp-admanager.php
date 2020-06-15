@@ -287,14 +287,24 @@ class AMP_AdManager {
 	 */
 	public static function get_sticky_ad( $attr = [], $echo = false ) {
 
-		$attr['sticky']  = true;
-		$attr['ad-unit'] = esc_attr( self::$amp_settings['amp_admanager_sticky_ad_unit'] );
-		$attr['width']   = '728'; // @Todo Create setting fields from adn use height and width from settings.
-		$attr['height']  = '90';
-		$attr['layout']  = 'fixed';
-		
-		if( true === $echo ) {
-			echo self::get_amp_ad( $attr, $echo );
+		if ( empty( self::$amp_settings['amp_admanager_sticky_ad_unit'] ) || empty( self::$amp_settings['amp_admanager_sticky_ad_width'] ) || empty( self::$amp_settings['amp_admanager_sticky_ad_height'] ) ) {
+			return;
+		}
+
+		$default_attr = [
+			'ad-unit' => esc_attr( self::$amp_settings['amp_admanager_sticky_ad_unit'] ),
+			'width'   => esc_attr( self::$amp_settings['amp_admanager_sticky_ad_width'] ),
+			'height'  => esc_attr( self::$amp_settings['amp_admanager_sticky_ad_height'] ),
+			'layout'  => 'fixed',
+
+		];
+
+		$attr = wp_parse_args( $attr, $default_attr );
+
+		$attr['sticky'] = true;
+
+		if ( true === $echo ) {
+			echo self::get_amp_ad( $attr, $echo ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
 			return self::get_amp_ad( $attr, $echo );
 		}
