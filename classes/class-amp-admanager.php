@@ -146,7 +146,7 @@ class AMP_AdManager {
 		/**
 		 * Filters the targeting attribute for the AMP AD.
 		 *
-		 * @param array $targetting An array of targetting attribute data.
+		 * @param array $targeting  An array of targeting attribute data.
 		 * @param array $attr       An array of get_ads() attributes.
 		 */
 		$final_ad_data['targeting'] = apply_filters( 'amp_dfp_targeting_data', $final_ad_data['targeting'], $attr );
