@@ -244,6 +244,25 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		if ( ! empty( $old_wp_query ) ) {
 			$GLOBALS['wp_query'] = $old_wp_query;
 		}
+
+		$attr = [
+			'ad-unit'          => 'Test_Ad',
+			'custom-targeting' => 'siteDomain:test.com,test:test2',
+		];
+
+		$expected = [
+			'targeting' =>
+				[
+					'contentType' => '',
+					'siteDomain'  => 'test.com',
+					'adId'        => 'Test_Ad',
+					'test'        => 'test2',
+				],
+		];
+
+		$output = AMP_AdManager::get_dfp_ad_targeting_data( $attr );
+
+		$this->assertEquals( $expected, $output );
 	}
 
 	/**
@@ -313,6 +332,18 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$ad_attr         = [
 			'ad-unit' => 'AMP_ADTest',
 			'sizes'   => '970x250',
+		];
+		$output          = AMP_AdManager::get_ads( $ad_attr );
+
+		$this->assertNotEmpty( $output );
+		$this->assertEquals( $expected_output, $output );
+
+		// Custom targetting.
+		$expected_output = '<amp-ad width="970" height="250" media="(min-width: 800px)" type="doubleclick" data-slot="/123456789/AMP_ADTest" json=\'{&quot;targeting&quot;:{&quot;contentType&quot;:&quot;&quot;,&quot;siteDomain&quot;:&quot;test.com&quot;,&quot;adId&quot;:&quot;AMP_ADTest&quot;,&quot;test&quot;:&quot;test2&quot;}}\' data-multi-size="970x250" data-multi-size-validation="false" layout="responsive" data-loading-strategy="prefer-viewability-over-views" data-enable-refresh=></amp-ad>';
+		$ad_attr         = [
+			'ad-unit'          => 'AMP_ADTest',
+			'sizes'            => '970x250',
+			'custom-targeting' => 'siteDomain:test.com,test:test2',
 		];
 		$output          = AMP_AdManager::get_ads( $ad_attr );
 
@@ -551,13 +582,10 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$this->assertContains( '<link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">', $output );
 		$this->assertContains( '<script type="text/javascript" src="https://cdn.ampproject.org/v0.js" async></script>', $output ); // phpcs:ignore
 
-		// Test for is_amp_endpoint() condition.
-		$user_mock = $this->factory->user->create_and_get( [ 'role' => 'administrator' ] );
-		wp_set_current_user( $user_mock->ID );
-		$_GET['amp_validate'] = true;
-		$output_user          = Utility::buffer_and_return( [ $this->_instance, 'load_amp_resources' ] );
-
-		$this->assertEquals( $expected, $output_user );
+		Utility::mock_amp( true );
+		$output                      = Utility::buffer_and_return( [ $this->_instance, 'load_amp_resources' ] );
+		$this->assertEquals( $expected, $output );
+		Utility::mock_amp( false );
 
 	}
 }
