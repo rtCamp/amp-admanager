@@ -583,7 +583,7 @@ class Test_AMP_AdManager extends \WP_UnitTestCase {
 		$this->assertContains( '<script type="text/javascript" src="https://cdn.ampproject.org/v0.js" async></script>', $output ); // phpcs:ignore
 
 		Utility::mock_amp( true );
-		$output                      = Utility::buffer_and_return( [ $this->_instance, 'load_amp_resources' ] );
+		$output = Utility::buffer_and_return( [ $this->_instance, 'load_amp_resources' ] );
 		$this->assertEquals( $expected, $output );
 		Utility::mock_amp( false );
 
