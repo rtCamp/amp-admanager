@@ -120,12 +120,34 @@ class AMP_AdManager {
 		$final_ad_data = [];
 		$final_ad_data['targeting'] = $dfp_ad_data;
 
+		if ( ! empty( $attr['custom-targeting'] ) ) {
+
+			// Separate out all key values in array.
+			$custom_targeting = explode( ',', trim( $attr['custom-targeting'] ) );
+
+			if ( ! empty( $custom_targeting ) ) {
+
+				foreach ( $custom_targeting as $value ) {
+
+					// Separate out individual targeting key values as $key => $value pair.
+					$new_key_value = explode( ':', trim( $value ) );
+
+					if ( ! empty( $new_key_value ) ) {
+						$attr['targeting'][ trim( $new_key_value[0] ) ] = trim( $new_key_value[1] );
+					}
+				}
+			}
+		}
+
 		if ( ! empty( $attr['targeting'] ) ) {
 			$final_ad_data['targeting'] = array_unique( array_merge( $dfp_ad_data, $attr['targeting'] ) );
 		}
 
 		/**
-		 * amp_dfp_targeting_data filter to customize targeting variable.
+		 * Filters the targeting attribute for the AMP AD.
+		 *
+		 * @param array $targetting An array of targetting attribute data.
+		 * @param array $attr       An array of get_ads() attributes.
 		 */
 		$final_ad_data['targeting'] = apply_filters( 'amp_dfp_targeting_data', $final_ad_data['targeting'], $attr );
 
