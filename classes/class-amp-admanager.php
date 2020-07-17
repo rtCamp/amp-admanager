@@ -60,10 +60,14 @@ class AMP_AdManager {
 
 			if ( is_author() ) {
 
+				// todo: Check if username is available in queried object.
+				/**
+				 * Ignoring code coverage for below lines because username member is not available in queried object.
+				 */
 				if ( ! empty( $queried->data->username ) ) {
-					$dfp_ad_data['authorPage'] = $queried->data->username;
+					$dfp_ad_data['authorPage'] = $queried->data->username; // @codeCoverageIgnore
 				} elseif ( ! empty( $queried->username ) ) {
-					$dfp_ad_data['authorPage'] = $queried->username;
+					$dfp_ad_data['authorPage'] = $queried->username; // @codeCoverageIgnore
 				}
 			}
 
@@ -116,12 +120,34 @@ class AMP_AdManager {
 		$final_ad_data = [];
 		$final_ad_data['targeting'] = $dfp_ad_data;
 
+		if ( ! empty( $attr['custom-targeting'] ) ) {
+
+			// Separate out all key values in array.
+			$custom_targeting = explode( ',', trim( $attr['custom-targeting'] ) );
+
+			if ( ! empty( $custom_targeting ) ) {
+
+				foreach ( $custom_targeting as $value ) {
+
+					// Separate out individual targeting key values as $key => $value pair.
+					$new_key_value = explode( ':', trim( $value ) );
+
+					if ( ! empty( $new_key_value ) ) {
+						$attr['targeting'][ trim( $new_key_value[0] ) ] = trim( $new_key_value[1] );
+					}
+				}
+			}
+		}
+
 		if ( ! empty( $attr['targeting'] ) ) {
 			$final_ad_data['targeting'] = array_unique( array_merge( $dfp_ad_data, $attr['targeting'] ) );
 		}
 
 		/**
-		 * amp_dfp_targeting_data filter to customize targeting variable.
+		 * Filters the targeting attribute for the AMP AD.
+		 *
+		 * @param array $targeting  An array of targeting attribute data.
+		 * @param array $attr       An array of get_ads() attributes.
 		 */
 		$final_ad_data['targeting'] = apply_filters( 'amp_dfp_targeting_data', $final_ad_data['targeting'], $attr );
 
@@ -288,9 +314,9 @@ class AMP_AdManager {
 			if ( 728 <= (int) $width ) {
 				$breakpoints = self::set_max_height_and_width( 'desktop', $breakpoints, $width, $height );
 			} elseif ( 300 <= (int) $width && 600 >= (int) $width ) {
-				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );	
+				$breakpoints = self::set_max_height_and_width( 'tablet', $breakpoints, $width, $height );
 				if ( 350 >= (int) $width ) {
-				$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
+					$breakpoints = self::set_max_height_and_width( 'mobile', $breakpoints, $width, $height );
 				}
 			}
 		}

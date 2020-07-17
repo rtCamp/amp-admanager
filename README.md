@@ -170,6 +170,15 @@ Once you've decided to commit the time to seeing your pull request through, plea
 
 1. You need at least one approval and once your pull request has passed code review and tests, it will be merged into `develop` and be in the pipeline for the next release.
 
+## Unit testing
+
+- Setup local unit test environment by running the below script from terminal with appropriate values.
+  - `./bin/install-wp-tests.sh <db-name> <db-user> <db-pass> [db-host] [wp-version] [skip-database-creation]`
+
+  - E.g `./bin/install-wp-tests.sh amp_admanager_test root root localhost`
+- Run `phpunit` in terminal from cloned project directory to run all test cases.
+- Run `phpunit ./tests/classes/test-class.php` with file path to run specific tests.
+
 ## Change Log
 
 ### v1.0.0 (27-09-2019)
