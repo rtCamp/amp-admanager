@@ -148,4 +148,20 @@ class Utility {
 		// phpcs:enable
 	}
 
+	/**
+	 * Utility method to fool is_amp_endpoint() into believing current URL is an AMP URL
+	 *
+	 * @return void
+	 */
+	public static function mock_amp( $amp_query_var = true ) {
+
+		if ( ! defined( 'AMP_QUERY_VAR' ) ) {
+			// AMP plugin should already have this variable define, fallback condition never reached by unit test
+			define( 'AMP_QUERY_VAR', apply_filters( 'amp_query_var', 'amp' ) ); // @codeCoverageIgnore
+		}
+
+		set_query_var( AMP_QUERY_VAR, $amp_query_var );
+
+	}
+
 }
